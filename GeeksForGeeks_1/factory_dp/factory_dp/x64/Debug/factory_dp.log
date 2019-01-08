@@ -1,0 +1,17 @@
+﻿Build started 10/19/2018 3:34:11 PM.
+     1>Project "C:\Users\rstrepparava\Documents\Visual Studio 2015\Projects\facebook\factory_dp\factory_dp\factory_dp.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\ProgramData\Microsoft Visual Studio 14.0\VC\bin\x86_amd64\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"x64\Debug\\" /Fd"x64\Debug\vc140.pdb" /Gd /TP /errorReport:prompt main.cpp Object.cpp
+         Object.cpp
+         main.cpp
+         Generating Code...
+       Link:
+         C:\ProgramData\Microsoft Visual Studio 14.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\rstrepparava\Documents\Visual Studio 2015\Projects\facebook\factory_dp\x64\Debug\factory_dp.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"C:\Users\rstrepparava\Documents\Visual Studio 2015\Projects\facebook\factory_dp\x64\Debug\factory_dp.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\rstrepparava\Documents\Visual Studio 2015\Projects\facebook\factory_dp\x64\Debug\factory_dp.lib" /MACHINE:X64 x64\Debug\main.obj
+         x64\Debug\Object.obj
+         x64\Debug\ToyFactory.obj
+         factory_dp.vcxproj -> C:\Users\rstrepparava\Documents\Visual Studio 2015\Projects\facebook\factory_dp\x64\Debug\factory_dp.exe
+     1>Done Building Project "C:\Users\rstrepparava\Documents\Visual Studio 2015\Projects\facebook\factory_dp\factory_dp\factory_dp.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:07.45
