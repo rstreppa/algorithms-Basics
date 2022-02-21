@@ -6,6 +6,7 @@
 @type:          lib
 @description:   two pointer algorithm examples and problems
 """
+from functools import reduce
 
 # https://leetcode.com/articles/two-pointer-technique/
 
@@ -259,4 +260,85 @@ def maxArea(height):
             j-=1 
             
     return res
-        
+
+def twoSum(nums, target):
+    ''' Given an array of integers nums and an integer target, return indices of the two numbers 
+        such that they add up to target.
+        You may assume that each input would have exactly one solution, and you may not use the same element twice.
+        You can return the answer in any order
+    '''
+    d = {}
+    for i, n in enumerate(nums):
+        m = target - n
+        if m in d:
+            return [d[m], i]
+        else:
+            d[n] = i
+
+def sortedSquares(nums):
+    ''' Given an integer array nums sorted in non-decreasing order, 
+        return an array of the squares of each number sorted in non-decreasing order. 
+        Squaring each element and sorting the new array is very trivial, 
+        could you find an O(n) solution using a different approach?
+    '''
+    answer  = [0] * len(nums)
+    l       = 0
+    r       = len(nums) - 1
+    while l <= r:
+        left, right = abs(nums[l]), abs(nums[r])
+        if left > right:
+            answer[r - l] = left * left
+            l += 1
+        else:
+            answer[r - l] = right * right
+            r -= 1
+    return answer
+
+
+
+def backspaceCompare(s, t):
+    ''' Given two strings s and t, return true if they are equal when both are typed into empty text editors. 
+        '#' means a backspace character.
+        Note that after backspacing an empty text, the text will continue empty.
+    '''
+    def back(res, c):
+        ''' add chars if not back space # '''
+        if c != '#': 
+            res.append(c)
+        elif res: 
+            res.pop()
+        return res 
+    
+    return reduce(back, s, []) == reduce(back, t, []) 
+
+def backspaceCompare2(S, T):
+    ''' Given two strings s and t, return true if they are equal when both are typed into empty text editors. 
+        '#' means a backspace character.
+        Note that after backspacing an empty text, the text will continue empty.
+        Two pointeres technique
+    ''' 
+    back = lambda res, c: res[:-1] if c == '#' else res + c
+    return reduce(back, S, "") == reduce(back, T, "")
+
+def backspaceCompare3(S, T):
+    ''' Given two strings s and t, return true if they are equal when both are typed into empty text editors. 
+        '#' means a backspace character.
+        Note that after backspacing an empty text, the text will continue empty.
+        Two pointeres technique
+    ''' 
+    i, j = len(S) - 1, len(T) - 1
+    backS = backT = 0
+    while True:
+        while i >= 0 and (backS or S[i] == '#'):
+            backS += 1 if S[i] == '#' else -1
+            i -= 1
+        while j >= 0 and (backT or T[j] == '#'):
+            backT += 1 if T[j] == '#' else -1
+            j -= 1
+        if not (i >= 0 and j >= 0 and S[i] == T[j]):
+            return i == j == -1
+        i, j = i - 1, j - 1
+
+
+
+

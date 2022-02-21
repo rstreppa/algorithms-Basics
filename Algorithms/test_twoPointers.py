@@ -11,6 +11,7 @@ from twoPointers import removeDuplicates, removeDuplicates2, isPalindrome, isPal
 from twoPointers import swap, reverse, maxArea
 from doublyLinkedList import DoublyLinkedList
 from linkedList import LinkedList
+from twoPointers import twoSum, sortedSquares, backspaceCompare, backspaceCompare2, backspaceCompare3
 
 def main():
     print('###############################')
@@ -77,4 +78,22 @@ def main():
     print('###############################')
     height = [1,8,6,2,5,4,8,3,7]
     print(maxArea(height))
-    print('###############################')
+    print('#### twoSum #########################')
+    nums = [2,7,11,15] 
+    target = 9
+    print(twoSum(nums, target))
+    print(twoSum([3,2,4], 6))
+    print(twoSum([3,3], 6))
+    print('#### sortedSquares #########################')
+    print(sortedSquares([-4,-1,0,3,10]))
+    print(sortedSquares([-7,-3,2,3,11]))
+    print('#### backspaceCompare backspaceCompare2 #########################')
+    print(backspaceCompare("ab#c", "ad#c"))
+    print(backspaceCompare("ab##", "c#d#"))
+    print(backspaceCompare("a#c", "b"))
+    print(backspaceCompare2("ab#c", "ad#c"))
+    print(backspaceCompare2("ab##", "c#d#"))
+    print(backspaceCompare2("a#c", "b"))
+    print(backspaceCompare3("ab#c", "ad#c"))
+    print(backspaceCompare3("ab##", "c#d#"))
+    print(backspaceCompare("a#c", "b"))
