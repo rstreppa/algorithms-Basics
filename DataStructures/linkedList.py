@@ -243,4 +243,141 @@ class LinkedList:
         kthNode.next    = None
         return
         
+    def hasCycle(self):
+        ''' Given head, the head of a linked list, determine if the linked list has a cycle in it. '''
+        if not self.head or not self.head.next:
+            return False
         
+        visited = set()
+        curr    = self.head
+        while curr:
+            if curr in visited:
+                return True
+            visited.add(curr)
+            curr    = curr.next 
+        return False
+            
+    def hasCycle2(self): 
+        ''' Use Floyd slow + fast pointers '''
+        if not self.head or not self.head.next:
+            return False
+        slow    = self.head 
+        fast    = self.head
+        
+        while slow and fast and fast.next:
+            slow = slow.next 
+            fast = fast.next.next
+            if slow == fast:
+                return True
+            
+        return False
+                   
+    def middleNode(self):
+        ''' Given the head of a singly linked list, return the middle node of the linked list. 
+            If there are two middle nodes, return the second middle node.
+        '''
+        if not self.head or not self.head.next:
+            return self.head
+        
+        slow = self.head
+        fast = self.head
+        
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+               
+        return slow
+    
+    def isPalindrome(self):
+        if not self.head or not self.head.next:
+            return True
+        
+        stack = list()
+        slow = self.head
+        fast = self.head
+        curr = self.head
+        
+        # midpoint
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+        
+        # Push the second half into the stack
+        stack.append(slow.data)
+        
+        while slow.next:
+            slow = slow.next
+            stack.append(slow.data) 
+        
+        # comparison
+        while stack:
+            if stack.pop() != curr.data:
+                return False
+            curr = curr.next
+                 
+        return True
+   
+    def removeElements(self, val):
+        ''' Given the head of a linked list and an integer val, 
+            remove all the nodes of the linked list that has Node.val == val, and return the new head.
+        '''
+        while self.head and self.head.data == val:
+            self.head = self.head.next
+        
+        curr = self.head
+        while curr and curr.next:
+            if curr.next.data == val:
+                curr.next = curr.next.next
+            else:
+                curr = curr.next
+        return self.head
+        
+    def deleteDuplicates(self):
+        ''' Given the head of a sorted linked list, delete all duplicates such that each element appears only once. 
+            Return the linked list sorted as well. 
+        '''
+        if not self.head:
+            return self.head
+        
+        curr = self.head 
+        while curr and curr.next:
+            if curr.data == curr.next.data:
+                curr.next = curr.next.next      # careful NOT curr = curr.next.next
+            else:
+                curr = curr.next
+        
+        return self.head
+        
+def mergeTwoLists( l1, l2 ):
+    ''' You are given the heads of two sorted linked lists list1 and list2.
+        Merge the two lists in a one sorted list. 
+        The list should be made by splicing together the nodes of the first two lists.
+        Return the head of the merged linked list. 
+    ''' 
+    dummy = temp = Node(0)
+    while l1 != None and l2 != None: #1
+        if l1.data < l2.data: #2
+            temp.next = l1 #3
+            l1 = l1.next #4
+        else: 
+            temp.next = l2
+            l2 = l2.next
+        temp = temp.next
+    temp.next = l1 or l2  #5
+    return dummy.next #6   
+    
+def getDecimalValue(head):
+    ''' Given head which is a reference node to a singly-linked list. 
+        The value of each node in the linked list is either 0 or 1. 
+        The linked list holds the binary representation of a number.
+        Return the decimal value of the number in the linked list.
+    '''
+    result = 0
+    while head: 
+        result = result*2 + head.data 
+        head = head.next 
+    return result        
+   
+    
+    
+    

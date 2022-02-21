@@ -7,7 +7,7 @@
 @description:   test file for script C:/Users/rober/OneDrive/Documents/Library/Programming/Data_Structures/LinkedList/linkedList.py
 """
 
-from linkedList import Node, LinkedList
+from linkedList import Node, LinkedList, mergeTwoLists, getDecimalValue
 
 
 def test_LinkedList():
@@ -121,4 +121,121 @@ def main():
     print('###################')
     l.rotate(2)
     l.printList()
+    print('#### hasCycle #########################')
+    llist = LinkedList()
+    llist.push(20)
+    llist.push(4)
+    llist.push(15)
+    llist.push(10)     
+    # Create a loop for testing
+    llist.head.next.next.next.next = llist.head 
+    print(llist.hasCycle())
+    print(llist.hasCycle2())
+    print('#### middleNode #########################')
+    l = LinkedList()
+    l.push(5)
+    l.push(4) 
+    l.push(3)
+    l.push(2)
+    l.push(1)
+    print(l.middleNode().data)
+    g = LinkedList()
+    g.push(6)
+    g.push(5) 
+    g.push(4)
+    g.push(3)
+    g.push(2)
+    g.push(1)
+    print(g.middleNode().data)
+    print('#### isPalindrome #########################')
+    l = LinkedList()
+    l.push(1)
+    l.push(2) 
+    l.push(2)
+    l.push(1)
+    print( l.isPalindrome() )
+    g = LinkedList()
+    g.push(2)
+    g.push(1)
+    print( g.isPalindrome() )
+    h = LinkedList()
+    h.push(1)
+    h.push(2) 
+    h.push(3)
+    h.push(2)
+    h.push(1)
+    print( h.isPalindrome() )
+    print('#### removeElements #########################')
+    l = LinkedList()
+    for data in [1,2,6,3,4,5,6][::-1]:
+        l.push(data)
+    l.removeElements(6)
+    l.printList()
+    g = LinkedList()
+    for data in [][::-1]:
+        g.push(data)
+    g.removeElements(1)
+    g.printList()
+    h = LinkedList()
+    for data in [7,7,7,7][::-1]:
+        h.push(data)
+    h.removeElements(7)
+    h.printList()
+    print('#### deleteDuplicates #########################')
+    l = LinkedList()
+    for data in [1,1,2][::-1]:
+        l.push(data)
+    l.deleteDuplicates()
+    l.printList()
+    g = LinkedList()
+    for data in [1,1,2,3,3][::-1]:
+        g.push(data)
+    g.deleteDuplicates()
+    g.printList()
+    print('#### mergeTwoLists #########################')
+    l1 = LinkedList()
+    for data in [1,2,4][::-1]:
+        l1.push(data)
+    l2 = LinkedList()
+    for data in [1,3,4][::-1]:
+        l2.push(data)
+    head = mergeTwoLists(l1.head, l2.head)
+    l3   = LinkedList()
+    l3.head = head
+    l3.printList()
+
+    l1 = LinkedList()
+    for data in [][::-1]:
+        l1.push(data)
+    l2 = LinkedList()
+    for data in [][::-1]:
+        l2.push(data)
+    head = mergeTwoLists(l1.head, l2.head)
+    l3   = LinkedList()
+    l3.head = head
+    l3.printList()
+    
+    l1 = LinkedList()
+    for data in [][::-1]:
+        l1.push(data)
+    l2 = LinkedList()
+    for data in [0][::-1]:
+        l2.push(data)
+    head = mergeTwoLists(l1.head, l2.head)
+    l3   = LinkedList()
+    l3.head = head
+    l3.printList()
+    print('#### getDecimalValue #########################')
+    l = LinkedList()
+    for data in [1,0,1][::-1]:
+        l.push(data)
+    print(getDecimalValue(l.head))
+    l = LinkedList()
+    for data in [0][::-1]:
+        l.push(data)
+    print(getDecimalValue(l.head))
+    l = LinkedList()
+    for data in [1,0,1,0][::-1]:
+        l.push(data)
+    print(getDecimalValue(l.head))
     
