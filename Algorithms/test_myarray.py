@@ -15,8 +15,9 @@ from myarray import findDuplicate, findDuplicate2, findDuplicates, findDuplicate
 from myarray import setZeroes, spiralOrder, rotate
 from myarray import numPairsDivisibleBy60, canThreePartsEqualSum
 from myarray import longestConsecutive, maxScoreSightseeingPair, heightChecker
-from myarray import sumOfDigits, duplicateZeros, prefixesDivBy5, allCellsDistOrder, diagonalSort
-
+from myarray import sumOfDigits, duplicateZeros, prefixesDivBy5, allCellsDistOrder, diagonalSort, maxScoreIndices
+from myarray import numOfSubarrays, numTimesAllBlue, maxSumTwoNoOverlap, maxSumTwoNoOverlap2
+from myarray import maxSatisfied, sampleStats, twoSumLessThanK, numSteps, getWays
 
 def main():
     print('#### containsDuplicate #########################')
@@ -148,4 +149,38 @@ def main():
     print('#### diagonalSort #########################')
     print(diagonalSort([[3,3,1,1],[2,2,1,2],[1,1,1,2]]))
     print(diagonalSort([[11,25,66,1,69,7],[23,55,17,45,15,52],[75,31,36,44,58,8],[22,27,33,25,68,4],[84,28,14,11,5,50]]))
-    
+    print('#### maxScoreIndices #########################')
+    print( maxScoreIndices([0,0,1,0]) )
+    print( maxScoreIndices([0,0,0]) )
+    print( maxScoreIndices([1,1]) )
+    print('#### numOfSubarrays #########################')
+    print( numOfSubarrays( [2,2,2,2,5,5,5,8], 3, 4 ) )
+    print( numOfSubarrays( [11,13,17,23,29,31,7,5,2,3], 3, 5 ) )
+    print('#### numTimesAllBlue #########################')
+    print( numTimesAllBlue( [3,2,4,1,5] ) )
+    print( numTimesAllBlue( [4,1,2,3] ) )
+    print('#### maxSumTwoNoOverlap #########################')
+    print( maxSumTwoNoOverlap( [0,6,5,2,2,5,1,9,4], 1, 2 ) )
+    print( maxSumTwoNoOverlap( [3,8,1,3,2,1,8,9,0], 3, 2 ) )
+    print( maxSumTwoNoOverlap( [2,1,5,6,0,9,5,0,3,8], 4, 3 ) )
+    print( maxSumTwoNoOverlap2( [0,6,5,2,2,5,1,9,4], 1, 2 ) )
+    print( maxSumTwoNoOverlap2( [3,8,1,3,2,1,8,9,0], 3, 2 ) )
+    print( maxSumTwoNoOverlap2( [2,1,5,6,0,9,5,0,3,8], 4, 3 ) )
+    print('#### maxSatisfied #########################')
+    print( maxSatisfied( [1,0,1,2,1,1,7,5], [0,1,0,1,0,1,0,1], 3 ) )
+    print( maxSatisfied( [1], [0], 1 ) )
+    print('#### sampleStats #########################')
+    print( sampleStats([0,1,3,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+) )
+    print(sampleStats([0,4,3,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+))
+    print('#### twoSumLessThanK #########################')
+    print( twoSumLessThanK([34,23,1,24,75,33,54,8], 60) )
+    print( twoSumLessThanK([10,20,30], 15) )
+    print('#### numSteps #########################')
+    print( numSteps( "1101" ) )
+    print( numSteps( "10" ) )
+    print( numSteps( "1" ) )
+    print('#### getWays #########################')
+    print( getWays( 4, [1, 2, 3] ) )
+    print( getWays( 10, [2, 5, 3, 6 ] ) )

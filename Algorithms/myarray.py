@@ -7,6 +7,8 @@
 @description:   miscellaneous arrays problems
 """
 from functools import reduce
+import bisect
+
 
 def containsDuplicate(nums):
     ''' Given an integer array nums, return true if any value appears at least twice in the array, 
@@ -70,7 +72,7 @@ def canAttendMeetings( intervals ):
     '''
     new_intervals = sorted( intervals, key=lambda x: x[0] )
     for i in range(1,len(new_intervals)):
-        if new_intervals[i-1][1] > new_intervals[i][0]: # end of previous overlaps with stgart of current 
+        if new_intervals[i-1][1] > new_intervals[i][0]: # end of previous overlaps with stgrt of current 
             return False
     return True            
         
@@ -497,11 +499,26 @@ def prefixesDivBy5(nums):
     '''
     res     = []
     
+    # def bin2num(arr):
+    #     result = 0
+    #     while(arr):
+    #         result += 2*arr.pop()
+    #     return result
+    
+    # def bin2num(arr):
+    #     mult   = 1
+    #     result = arr.pop()
+    #     while(arr):
+    #         mult   *= 2
+    #         result += mult*arr.pop()
+    #     return result
+
     def bin2num(arr):
-        result = 0
-        while(arr):
-            result += 2*arr.pop()
-        return result
+        res = 0
+        while arr:
+            res = 2*res + arr.pop()
+        return res
+     
     
     for i in range(len(nums)):
        arr  = nums[:i+1] 
@@ -567,4 +584,292 @@ def diagonalSort(mat):
         arrangeDiagonal(0,col,diagonal,mat,R,C)
 
     return mat    
+
+def maxScoreIndices(nums):
+
+    """
+
+    :type nums: List[int]
+
+    :rtype: List[int]
+
+ 
+
+    2155. All Divisions With the Highest Score of a Binary Array
+
+    Medium
+
+    You are given a 0-indexed binary array nums of length n. nums can be divided at index i (where 0 <= i <= n) into two arrays (possibly empty)
+
+    numsleft and numsright:
+
+ 
+
+    numsleft has all the elements of nums between index 0 and i - 1 (inclusive), while numsright has all the elements of nums
+
+    between index i and n - 1 (inclusive).
+
+    If i == 0, numsleft is empty, while numsright has all the elements of nums.
+
+    If i == n, numsleft has all the elements of nums, while numsright is empty.
+
+    The division score of an index i is the sum of the number of 0's in numsleft and the number of 1's in numsright.
+
+ 
+
+    Return all distinct indices that have the highest possible division score. You may return the answer in any order.
+
+ 
+
+    O(3N)
+
+    """
+
+    left = 0
+
+    right = nums.count(1)
+
+    value = [left + right]
+
+    for i in nums:
+
+        if i == 0:
+
+            left += 1
+
+        else:
+
+            right -= 1
+
+        value.append(left + right)
+
+    max_val = max(value)
+
+    return [i for i,v in enumerate(value) if v == max_val]           
+
+def numOfSubarrays( arr, k, threshold ):
+    ''' 1343. Number of Sub-arrays of Size K and Average Greater than or Equal to Threshold
+        Medium
+        Given an array of integers arr and two integers k and threshold, 
+        return the number of sub-arrays of size k and average greater than or equal to threshold.
     
+        Sliding window, make sure you don't exceed time limit
+    '''
+    ans = 0
+    
+    i, j, subarrsum = 0, 0, 0 
+    
+    while j < len(arr):
+        subarrsum += arr[j]
+        
+        if j-i+1<k:
+            j += 1
+        else:
+            if subarrsum >= k*threshold:
+                ans += 1
+                                
+            subarrsum -= arr[i]
+            j += 1
+            i += 1
+    return ans
+   
+def numTimesAllBlue(flips):
+    ''' 1375. Number of Times Binary String Is Prefix-Aligned
+        Medium
+        Share
+        You have a 1-indexed binary string of length n where all the bits are 0 initially. 
+        We will flip all the bits of this binary string (i.e., change them from 0 to 1) one by one. 
+        You are given a 1-indexed integer array flips where flips[i] indicates that the bit at index i will be flipped in the ith step.      
+        A binary string is prefix-aligned if, after the ith step, all the bits in the inclusive range [1, i] 
+        are ones and all the other bits are zeros.        
+        Return the number of times the binary string is prefix-aligned during the flipping process.
+        
+        Bascially deep meaning is that column b is reaarange of column A.
+        Reading all it means when to reach step x we need to flip all the <=x numbers.
+    '''    
+    count = 0
+    maxi = 0
+    for i,v in enumerate(flips):
+        maxi = max(v,maxi)          
+        if maxi == i+1:
+            count += 1
+        
+    return count
+
+def maxSumTwoNoOverlap(nums, firstLen, secondLen):
+    ''' 1031. Maximum Sum of Two Non-Overlapping Subarrays
+        Medium
+        Given an integer array nums and two integers firstLen and secondLen, 
+        return the maximum sum of elements in two non-overlapping subarrays with lengths firstLen and secondLen.       
+        The array with length firstLen could occur before or after the array with length secondLen, but they have to be non-overlapping.       
+        A subarray is a contiguous part of an array.
+    ''' 
+    res1 = 0 
+    n    = len(nums)
+    for i in range(n-firstLen-secondLen):
+        for j in range(i+firstLen, n-secondLen):
+            res1 = max( res1, sum(nums[i:i+firstLen])+sum(nums[j:j+secondLen]) )
+    res2 = 0 
+    for i in range(n-firstLen-secondLen):
+       for j in range(i+secondLen, n-firstLen):
+           res2 = max( res2, sum(nums[i:i+secondLen])+sum(nums[j:j+firstLen]) )
+
+    return max(res1, res2) 
+
+def maxSumTwoNoOverlap2(nums, firstLen, secondLen):
+    '''  O(N) dynamic programming solution '''
+    dp = [0] * (len(nums) + 1)
+    res1, res2, res = -1, -1, -1
+
+    for i in range(1, len(dp)):
+        dp[i] = dp[i - 1] + nums[i - 1]
+
+        if i >= firstLen + secondLen:
+            res1 = max(res1, dp[i - secondLen] - dp[i - secondLen - firstLen])
+            res2 = max(res2, dp[i - firstLen] - dp[i - firstLen - secondLen])
+
+            first_second = res1 + dp[i] - dp[i - secondLen]
+            second_first = res2 + dp[i] - dp[i - firstLen]
+            res = max(res, first_second, second_first)
+
+    return res    
+       
+def maxSatisfied(customers, grumpy, minutes):
+    ''' 1052. Grumpy Bookstore Owner
+        Medium
+        There is a bookstore owner that has a store open for n minutes. 
+        Every minute, some number of customers enter the store. You are given an integer array customers of length n 
+        where customers[i] is the number of the customer that enters the store at the start of the ith minute 
+        and all those customers leave after the end of that minute.      
+        On some minutes, the bookstore owner is grumpy. You are given a binary array grumpy where grumpy[i] is 1 
+        if the bookstore owner is grumpy during the ith minute, and is 0 otherwise.       
+        When the bookstore owner is grumpy, the customers of that minute are not satisfied, otherwise, they are satisfied.       
+        The bookstore owner knows a secret technique to keep themselves not grumpy for minutes consecutive minutes, but can only use it once.       
+        Return the maximum number of customers that can be satisfied throughout the day.
+        
+         Idea:
+        Without secret technique sum:
+        = totalSatisfied - totalGrumpy
+        
+        With secret technique sum:
+        = totalSatisfied - totalGrumpy + maxSaved
+        
+        maxSaved = the max sum of k minute sliding window       
+    '''
+    totalSatisfied, totalGrumpy = 0, 0
+    windowStart, maxSaved, currSaved = 0, 0, 0
+
+    for windowEnd in range(len(customers)):
+        totalSatisfied += customers[windowEnd]
+        totalGrumpy += customers[windowEnd] * grumpy[windowEnd]
+        currSaved += customers[windowEnd] * grumpy[windowEnd]
+        if windowEnd - windowStart + 1 > minutes:
+            currSaved -= customers[windowStart] * grumpy[windowStart]
+            windowStart += 1
+        maxSaved = max(maxSaved, currSaved)
+
+    return totalSatisfied - totalGrumpy + maxSaved 
+
+def sampleStats(count):
+    ''' 1093. Statistics from a Large Sample
+        Medium
+        You are given a large sample of integers in the range [0, 255]. Since the sample is so large, 
+        it is represented by an array count where count[k] is the number of times that k appears in the sample.
+        
+        Calculate the following statistics:
+        
+        minimum: The minimum element in the sample.
+        maximum: The maximum element in the sample.
+        mean: The average of the sample, calculated as the total sum of all elements divided by the total number of elements.
+        median:
+        If the sample has an odd number of elements, then the median is the middle element once the sample is sorted.
+        If the sample has an even number of elements, then the median is the average of the two middle elements once the sample is sorted.
+        mode: The number that appears the most in the sample. It is guaranteed to be unique.
+        Return the statistics of the sample as an array of floating-point numbers [minimum, maximum, mean, median, mode]. 
+        Answers within 10-5 of the actual answer will be accepted.
+    '''
+    mn,mx,mode,max_freq,sm,total=float('+inf'),float('-inf'),0,0,0,0
+    arr=[]
+    for i,el in enumerate(count):
+        if el>0: 
+            mn=min(mn,i)
+            mx=max(mx,i)
+        if el>max_freq:
+            mode=i
+            max_freq=el
+        sm+=el*i
+        total+=el
+        arr.append(total)
+    median1=bisect.bisect(arr,(total-1)//2)
+    median2=bisect.bisect(arr,total//2)
+    return [mn,mx,sm/total,(median1+median2)/2,mode]  
+
+def twoSumLessThanK( A, K):
+    ''' 1099. Two Sum Less Than K 
+        Given an array A of integers and integer K, return the maximum S such that 
+        there exists i < j with A[i] + A[j] = S and S < K. If no i, j exist satisfying this equation, return -1.
+
+        Approach 1: Two Point
+    '''
+    res = -1
+    A   = sorted(A)
+    i   = 0 
+    j   = len(A)-1
+    while(i<j):
+        if A[i]+A[j] >= K:
+            j -= 1
+        else:
+            res = A[i]+A[j]
+            i += 1
+    return res
+        
+    
+def numSteps(s):
+    ''' 1404. Number of Steps to Reduce a Number in Binary Representation to One
+        Medium
+        Given the binary representation of an integer as a string s, return the number of steps to reduce it to 1 under the following rules:
+        
+        If the current number is even, you have to divide it by 2.
+        
+        If the current number is odd, you have to add 1 to it.
+        
+        It is guaranteed that you can always reach one for all test cases.
+    '''
+    #s = s[::-1]
+    n = 0 
+    for c in s:
+        n = 2*n+int(c)
+        
+    res = 0 
+    while n > 1:
+        if  n%2 == 0:
+            n /= 2 
+        else:
+             n += 1
+        res += 1 
+    return res
+
+def getWays(n, c):
+    ''' Given an amount and the denominations of coins available, determine how many ways change can be made for amount. 
+        There is a limitless supply of each coin type.
+    '''
+    def dfs( total, coins , coin_num, lookup ):        
+
+        if total == 0:
+            return 1
+        elif total < 0:
+            return 0
+        elif coin_num <= 0:
+            return 0
+        
+        key = (total, coin_num)
+        
+        if key not in lookup:
+            lookup[key] = dfs( total, coins, coin_num-1, lookup ) + dfs( total-coins[coin_num-1], coins, coin_num, lookup )
+            
+        return lookup[key]
+
+    lookup = {}
+    coin_num = len(c)
+    lookup = {}
+    return dfs( n, c, coin_num, lookup )
