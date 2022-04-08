@@ -18,6 +18,7 @@ from myarray import longestConsecutive, maxScoreSightseeingPair, heightChecker
 from myarray import sumOfDigits, duplicateZeros, prefixesDivBy5, allCellsDistOrder, diagonalSort, maxScoreIndices
 from myarray import numOfSubarrays, numTimesAllBlue, maxSumTwoNoOverlap, maxSumTwoNoOverlap2
 from myarray import maxSatisfied, sampleStats, twoSumLessThanK, numSteps, getWays
+from myarray import longestArithSeqLength, lengthOfLIS, lengthOfLIS2, numberOfArithmeticSlices
 
 def main():
     print('#### containsDuplicate #########################')
@@ -184,3 +185,17 @@ def main():
     print('#### getWays #########################')
     print( getWays( 4, [1, 2, 3] ) )
     print( getWays( 10, [2, 5, 3, 6 ] ) )
+    print('#### longestArithSeqLength #########################')
+    print( longestArithSeqLength([3,6,9,12]) )
+    print( longestArithSeqLength([9,4,7,2,10]) )
+    print( longestArithSeqLength([20,1,15,3,10,5,8]) )
+    print('#### lengthOfLIS #########################')
+    print( lengthOfLIS( [10,9,2,5,3,7,101,18] ) )
+    print( lengthOfLIS( [0,1,0,3,2,3] ) )
+    print( lengthOfLIS( [7,7,7,7,7,7,7] ) )
+    print( lengthOfLIS2( [10,9,2,5,3,7,101,18] ) )
+    print( lengthOfLIS2( [0,1,0,3,2,3] ) )
+    print( lengthOfLIS2( [7,7,7,7,7,7,7] ) )
+    print('#### numberOfArithmeticSlices #########################')
+    print( numberOfArithmeticSlices([1,2,3,4]) )
+    print( numberOfArithmeticSlices([1]) )

@@ -873,3 +873,80 @@ def getWays(n, c):
     coin_num = len(c)
     lookup = {}
     return dfs( n, c, coin_num, lookup )
+
+
+def longestArithSeqLength(nums):
+    ''' 1027. Longest Arithmetic Subsequence
+        Medium
+        Given an array nums of integers, return the length of the longest arithmetic subsequence in nums.
+        
+        Recall that a subsequence of an array nums is a list nums[i1], nums[i2], ..., nums[ik] 
+        with 0 <= i1 < i2 < ... < ik <= nums.length - 1, and that a sequence seq is arithmetic 
+        if seq[i+1] - seq[i] are all the same value (for 0 <= i < seq.length - 1).
+    '''
+    n = len(nums)
+    max_len = 1
+    dp = [ [ 1 for i in range(1002) ] for j in range(n+1) ]
+    for i in range(n):
+        for j in range(i+1, n):
+            dif = nums[j] - nums[i] + 500
+            dp[j][dif] = dp[i][dif] +1
+            max_len = max( max_len, dp[j][dif] )
+    return max_len
+
+
+
+def lengthOfLIS(nums):
+    ''' 300. Longest Increasing Subsequence
+        Medium
+        Given an integer array nums, return the length of the longest strictly increasing subsequence.        
+        A subsequence is a sequence that can be derived from an array by deleting some or no elements 
+        without changing the order of the remaining elements. For example, [3,6,2,7] is a subsequence of the array [0,3,1,6,2,2,7].
+        Time O(n^2) / Memory O(n)
+    '''
+    dp=[1]*len(nums)
+    for i in range(1,len(nums)):
+        for j in range(i):
+            if nums[j]<nums[i]: dp[i]=max(dp[i],1+dp[j])
+    return max(dp)
+   
+def lengthOfLIS2(nums):
+    ''' Time O(nlog n) / Memory O(n) '''
+    ans=[]
+    for i in range(len(nums)):
+        if not ans or nums[i]>ans[-1]: 
+            ans.append(nums[i])
+        else: 
+            idx = bisect.bisect_left(ans,nums[i]) 
+            ans[idx] = nums[i]
+    return len(ans)    
+    
+def numberOfArithmeticSlices(nums):
+    ''' 413. Arithmetic Slices
+        Medium
+        An integer array is called arithmetic if it consists of at least three elements and 
+        if the difference between any two consecutive elements is the same.
+        
+        For example, [1,3,5,7,9], [7,7,7,7], and [3,-1,-5,-9] are arithmetic sequences.
+        Given an integer array nums, return the number of arithmetic subarrays of nums.
+        
+        A subarray is a contiguous subsequence of the array.
+    '''    
+    diff_arr = [0]*(len(nums)-1)
+    
+    for i in range(1,len(nums)):
+        diff_arr[i-1] = nums[i]-nums[i-1]
+        
+        
+    ans = 0
+    count_sum = 1
+    
+    for i in range(1,len(diff_arr)):
+        
+        if diff_arr[i] == diff_arr[i-1]:
+            ans += count_sum
+            count_sum += 1
+        else:
+            count_sum = 1
+            
+    return ans            
