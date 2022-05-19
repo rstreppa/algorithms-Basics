@@ -282,3 +282,29 @@ def letterCombinations(digits):
     prev        = letterCombinations(digits[:-1])
     additional  = mapping[digits[-1]]
     return [s + c for s in prev for c in additional]
+
+def binaryTreePaths(self, root):
+    """
+        257. Binary Tree Paths
+        Easy
+        Given the root of a binary tree, return all root-to-leaf paths in any order.      
+        A leaf is a node with no children.    
+    """
+    def backtrack( root, stack, res ):          
+        stack.append(root.val)
+        
+        if not root.left and not root.right:
+            path = "->".join( [str(val) for val in stack] )
+            res.append(path)
+        
+        if root.left:            
+            backtrack( root.left, stack, res )
+        if root.right:
+            backtrack( root.right, stack, res )
+        
+        stack.pop()
+        
+    res = []
+    stack = []
+    backtrack( root, stack, res)
+    return res
