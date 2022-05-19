@@ -38,7 +38,6 @@ def climbStairs(n):
 
 def maxProfit(prices):
     ''' 
-        IT'S WRONG!!!
         You are given an array prices where prices[i] is the price of a given stock on the ith day.
         You want to maximize your profit by choosing a single day to buy one stock and choosing a different 
         day in the future to sell that stock.
@@ -69,23 +68,17 @@ def maxProfit(prices):
         a6 - a2 is the required solution.       
         so we need to find the largest sub array sum to get the most profit                      
     '''
-    # maxCur      = 0
-    # maxSoFar    = 0 
-
-    # for i in range(1, len(prices)):
-    #     diff        = prices[i] - prices[i-1]
-    #     maxCur      = max(0, diff)
-    #     maxSoFar    = max(maxCur, maxSoFar)
-        
-    # return maxSoFar
-    n           = len(prices)
-    dp          = [0] * n
-    dp[0]       = max(0, prices[1] - prices[0])
-    minPrice    = prices[0]
+    diffs = list()
+    for i in range(1,len(prices)):
+        diffs.append( prices[i] - prices[i-1] )
+    
+    # max subarray problem using Kadane algorithm
+    n                       = len(diffs)
+    dp                      = [0] * n
+    dp[0]                   = diffs[0]
     for i in range(1, n):
-        minPrice    = min(minPrice, prices[i-1])
-        dp[i] = max(dp[i-1], prices[i]-minPrice)
-    return max(dp)
+        dp[i] = max( dp[i-1] + diffs[i], diffs[i])
+    return max( max( dp ), 0 )
 
 def maxProfitI(prices):
     '''     Best Time to Buy and Sell Stocks I
@@ -222,4 +215,150 @@ def rob(nums):
     dp = [-1] * (len(nums)+1)
     
     return dfs( nums, len(nums)-1)
+
+def coinChange(coins, amount):
+    ''' 322. Coin Change
+        Medium
+        You are given an integer array coins representing coins of different denominations 
+        and an integer amount representing a total amount of money.        
+        Return the fewest number of coins that you need to make up that amount. 
+        If that amount of money cannot be made up by any combination of the coins, return -1.   
+        You may assume that you have an infinite number of each kind of coin.
+    '''
+    memo = dict()
+    memo[0] = 0
+
+    def dp(coins, target): 
+        if target in memo:
+            return memo[target]
+        if target<0:
+            return -1
+        res = float('inf')
+        for coin in coins:
+            if dp(coins, target-coin) == -1:
+                continue
+            res = min(res, dp(coins, target-coin)+1)
+        memo[target] = res
+        return res
+    return dp(coins, amount) if dp(coins, amount)<float('inf') else -1
+
+def coinChange2(coins, amount):
+    ''' iterative DP solution '''
+    dp = [float('inf') for _ in range(1+amount)]
+    dp[0] = 0 
+
+    for i in range(1, 1+amount): 
+        for coin in coins:
+            if i-coin>=0: 
+                dp[i] = min(dp[i], dp[i-coin]+1)
+    return dp[amount] if dp[amount]<float('inf') else -1   
+
+
+def coinChange3(coins, amount):
+    ''' recursive DP solution that I actually understand 
+        Unfortunately it solves a different problem, namely not the min
+    '''
+    
+    # Function to find the total number of distinct ways to get a change of `target`
+    # from an unlimited supply of coins in set `S`
+    def count(S, n, target, lookup):
+     
+        # if the total is 0, return 1 (solution found)
+        if target == 0:
+            return 1
+     
+        # return 0 (solution does not exist) if total becomes negative,
+        # no elements are left
+        if target < 0 or n < 0:
+            return 0
+     
+        # construct a unique key from dynamic elements of the input
+        key = (n, target)
+     
+        # if the subproblem is seen for the first time, solve it and
+        # store its result in a dictionary
+        if key not in lookup:
+     
+            # Case 1. Include current coin `S[n]` in solution and recur
+            # with remaining change `target-S[n]` with the same number of coins
+            include = count(S, n, target - S[n], lookup)
+     
+            # Case 2. Exclude current coin `S[n]` from solution and recur
+            # for remaining coins `n-1`
+            exclude = count(S, n - 1, target, lookup)
+     
+            # assign total ways by including or excluding current coin
+            lookup[key] = include + exclude
+     
+        # return solution to the current subproblem
+        return lookup[key]    
+    
+    
+    lookup = {}
+    return count(coins, len(coins) - 1, amount, lookup)
+    
+def uniquePaths(m, n):
+    """
+        62. Unique Paths
+        Medium
+        There is a robot on an m x n grid. The robot is initially located at the top-left corner (i.e., grid[0][0]). 
+        The robot tries to move to the bottom-right corner (i.e., grid[m - 1][n - 1]). 
+        The robot can only move either down or right at any point in time.       
+        Given the two integers m and n, return the number of possible unique paths that the robot 
+        can take to reach the bottom-right corner.
+
+        Dynamic Programming Recursive
+    """
+
+    def dfs( m, n, lookup ):
+        if m == 1 or n == 1:
+            return 1
+        key = (m, n)
+        if key not in lookup:
+            lookup[key] = dfs(m-1, n, lookup ) + dfs(m, n-1, lookup )
+        return lookup[key]
+
+    lookup = {}
+    return  dfs( m, n, lookup )
+
+def uniquePaths2(m, n):
+    """ 
+        Dynamic Programming Iterative
+	
+        Count all possible paths from top left to bottom right of a mXn matrix
+        So this problem has both properties
+        1) Overlapping Subproblemss
+        2) Optimal Substructure
+
+        of a dynamic programming problem. Like other typical Dynamic Programming(DP) problems,
+        recomputations of same subproblems can be avoided by constructing a temporary array
+        count[][] in bottom up manner using the above recursive formula.
+
+    """
+
+    # Create a 2D table to store results of subproblems
+    # one-liner logic to take input for rows and columns
+    # mat = [[int(input()) for x in range (C)] for y in range(R)]
+
+    count = [[0 for x in range(n)] for y in range(m)]
+    
+    # Count of paths to reach any
+    # cell in first column is 1
+    for i in range(m):
+        count[i][0] = 1
+
+    # Count of paths to reach any
+    # cell in first column is 1
+    for j in range(n):
+        count[0][j] = 1
+
+    # Calculate count of paths for other
+    # cells in bottom-up
+    # manner using the recursive solution
+    for i in range(1, m):
+        for j in range(1, n):            
+            count[i][j] = count[i-1][j] + count[i][j-1]
+
+    return count[m-1][n-1]
+
 
