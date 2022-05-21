@@ -6,6 +6,8 @@
 @type:          lib
 @description:   simple problems involving dynamic programming
 """
+import sys
+
 
 def climbStairs(n):
     ''' You are climbing a staircase. It takes n steps to reach the top.
@@ -296,7 +298,42 @@ def coinChange3(coins, amount):
     
     lookup = {}
     return count(coins, len(coins) - 1, amount, lookup)
-    
+  
+
+def coinChange4(coins, amount):
+    ''' recursive DP solution that I actually understand 
+        This time it solves the real problem
+        Recursive top-down approach
+    '''
+    def dfs( coins, target, lookup ):
+
+         if target < 0:
+             return -1
+
+         if target == 0:
+             return 0
+
+         minVal = sys.maxint
+
+         if target not in lookup:
+             for coin in coins:
+                 tempRes = dfs( coins, target - coin, lookup )
+                 
+                 if tempRes >= 0 and tempRes < minVal:
+                     minVal = 1+tempRes
+
+             if minVal == sys.maxint:
+                 lookup[target] = -1
+             else:
+                 lookup[target] = minVal
+
+         return lookup[target]
+
+    lookup = {}
+    return dfs( coins, amount, lookup )
+
+
+  
 def uniquePaths(m, n):
     """
         62. Unique Paths
