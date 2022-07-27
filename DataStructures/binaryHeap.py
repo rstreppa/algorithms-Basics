@@ -94,3 +94,56 @@ def minStoneSum(piles, k):
     for i in range(k):
         heapq.heappush(piles, heapq.heappop(piles)//2)
     return -sum(piles)    
+
+def addNum(num, lowers, highers):
+    if not lowers or num < -lowers[0]:
+        heapq.heappush(lowers,-num)
+    else:
+        heapq.heappush(highers,num)
+    
+def rebalance(lowers, highers):
+    if len(lowers) - len(highers) >= 2:
+        heapq.heappush(highers,-heapq.heappop(lowers))
+    elif len(highers) - len(lowers) >= 2:
+        heapq.heappush(lowers,-heapq.heappop(highers))
+
+def getMedian(lowers, highers):
+    if len(lowers) == len(highers):
+        return (-lowers[0] + highers[0])/2
+    if len(lowers) > len(highers):
+        return float(-lowers[0])
+    else:
+        return float(highers[0])
+
+def runningMedian(a):
+    ''' The median of a set of integers is the midpoint value of the data set for which an equal number of integers are less than and greater             than the value. To find the median, you must first sort your set of integers in non-decreasing order, then:
+
+        If your set contains an odd number of elements, the median is the middle element of the sorted sample. In the sorted set ,  is the median.
+        If your set contains an even number of elements, the median is the average of the two middle elements of the sorted sample. In the sorted set ,  is the median.
+        Given an input stream of  integers, perform the following task for each  integer:
+
+        Add the  integer to a running list of integers.
+        Find the median of the updated list (i.e., for the first element through the  element).
+        Print the updated median on a new line. The printed value must be a double-precision number scaled to  decimal place (i.e.,  format).
+    
+        The problem becomes really nice due to time constraints. 
+        To solve this problem we will use two heaps minHeap and maxHeap. minHeap would           
+        contain all the elements greater than median (of previous iteration) and maxHeap would contain 
+        elements smaller than or equal to median (of previous iterations). 
+        Now insert the element accordingly and if the difference of size of minHeap and maxHep is greater than 1 , 
+        then pop the element from the heap of big size and insert into nextHeap Now 3 cases follow up 1. 
+        If minHeap.size()== maxHeap.size() median= (minHeap.top()+ maxHeap.top())/2; 
+        2.Else If minHeap.size()>maxHeap.size() median=minHeap.top(); 
+        3.Else median=maxHeap.top(); 
+        //for inserting first two elements, insert bigger element in minHeap and smaller in maxHeap. 
+    '''
+    # Write your code here
+    lowers = []  # max heap, vals should go in and come out negated
+    highers = []  # min heap, vals should go in positive
+    res = []
+    for v in a:
+        addNum(v, lowers, highers)
+        rebalance(lowers, highers)
+        res.append(round(getMedian(lowers, highers),1))
+    return res
+
