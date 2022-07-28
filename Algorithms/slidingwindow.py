@@ -49,3 +49,46 @@ def solve(arr, queries):
         res.append(minnum)
     
     return res
+
+
+def lengthOfLongestSubstring(s):
+    """
+    3. Longest Substring Without Repeating Characters
+    Medium
+    Given a string s, find the length of the longest substring without repeating characters.
+    Are you thinking what I am thinking 🤔? Yes, this is a classic example of a problem that can be solved using the legendary technique - Sliding Window Algorithm.
+
+    Following are the steps that we will follow -
+
+    Have two pointers which will define the starting index start and ending index end of the current window. Both will be 0 at the beginning.
+    Declare a Set that will store all the unique characters that we have encountered.
+    Declare a variable maxLength that will keep track of the length of the longest valid substring.
+    Scan the string from left to right one character at a time.
+    If the character has not encountered before i.e., not present in the Set the we will add it and increment the end index. The maxLength will be the maximum of Set.size() and existing maxLength.
+    If the character has encounter before, i.e., present in the Set, we will increment the start and we will remove the character at start index of the string.
+    Steps #5 and #6 are moving the window.
+    After the loop terminates, return maxLength
+
+    :type s: str
+    :rtype: int
+    """
+    # sliding window technique
+    n   = len(s)    
+    i   = 0
+    j   = 0
+    res = 0
+    ss  = set()
+    while i <= j and j < n:
+        if s[j] not in ss:
+            ss.add( s[j] )
+            length  = j-i+1   # alternatively length = len(ss)
+            res     = max( res, length )
+            j       += 1
+        else:
+            ss.remove(s[i])
+            i += 1
+    return res
+
+
+
+
