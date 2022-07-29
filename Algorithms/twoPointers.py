@@ -156,7 +156,34 @@ def threeSum(nums):
                 res.add( (-twoSum, nums[j], target ) )
     return res
         
-        
+def threeSumClosest(nums, target):
+    """
+    16. 3Sum Closest
+    Medium
+    Given an integer array nums of length n and an integer target, find three integers in nums such that the sum is closest to target.
+    Return the sum of the three integers.
+    You may assume that each input would have exactly one solution.    
+
+    :type nums: List[int]
+    :type target: int
+    :rtype: int
+    """
+    # two pointers I would say it's the way to go
+    nums    = sorted(nums)
+    n       = len(nums)
+    res     = sys.maxsize
+    for i in range(0, n-1):
+        l       = i+1
+        r       = n-1
+        while l < r:
+            val = nums[i] + nums[l] + nums[r]
+            if val < target:
+                l += 1
+            else:
+                r -= 1
+            if abs(val-target) < abs(res-target):
+                res = val
+    return res        
         
         
 def removeDuplicates( nums ):
