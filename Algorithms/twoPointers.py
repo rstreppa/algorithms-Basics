@@ -119,6 +119,46 @@ def findTriplets(arr, n):
     if (found == False):
         print(" No Triplet Found")
 
+def threeSum(nums):
+    """
+    15. 3Sum
+    Medium
+    Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0.
+    Notice that the solution set must not contain duplicate triplets.
+    
+    Hash map solution: same idea as preceding but slightly different to pass test cases
+    The problem wants to find all ABC so that A+B+C=0. We can use two for-loop to find out all the combinations of A, B. In each combination, we look for C.
+    If we again use a for-loop to find C, the time complexity would be O(N3). Therefore we need to reduce the time to find C.
+    It’s natural to think of dictionary, because it has a O(1) time for lookup a value. However, how can we make sure we don’t find duplicates?
+    # Avoid duplicates:
+    we can solve case #2 and #3 together. If we build a dictionary like this:
+    
+    key = A, value = largest index of A.
+    
+    then we can rule out the values occurred before the second pointer, or itself.    
+
+    :type nums: List[int]
+    :rtype: List[List[int]]
+    """
+    res     = set()
+    nums    = sorted(nums)
+    n       = len(nums)
+    d       = {}
+    for i in range(n):
+        d[nums[i]]  = i
+    for i in range(n):
+        if i !=0 and nums[i] == nums[i-1]:
+            continue
+        twoSum  = -nums[i]
+        for j in range(i+1, n):
+            target = twoSum - nums[j]
+            if target in d and d[target] > j:
+                res.add( (-twoSum, nums[j], target ) )
+    return res
+        
+        
+        
+        
 def removeDuplicates( nums ):
     ''' Remove Duplicates from Sorted Array  in-place such that each unique element appears only once. 
         The relative order of the elements should be kept the same. 
