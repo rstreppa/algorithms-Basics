@@ -145,4 +145,32 @@ def reverse(stack):
         reverse(stack)
         insertAtBottom(stack, temp)
 
-    
+def isValid(self, s):
+    """
+    20. Valid Parentheses
+    Easy
+    Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
+    An input string is valid if:
+    Open brackets must be closed by the same type of brackets.
+    Open brackets must be closed in the correct order.
+
+    Easy to solve using a stack
+
+    :type s: str
+    :rtype: bool
+    """
+    stack = []
+    for c in s:
+        if not stack:
+            stack.append(c)
+        elif    ( c == ')' and stack[-1] == '(' ) or \
+                ( c == ']' and stack[-1] == '[' ) or \
+                ( c == '}' and stack[-1] == '{' ):
+            stack.pop()
+        else:
+            stack.append(c)
+    if not stack:
+        return True
+    else:
+        return False
+  
