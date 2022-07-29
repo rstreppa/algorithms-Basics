@@ -498,7 +498,7 @@ def longestPalindrome2(st):
                     maxLength = k
             i = i + 1
         k = k + 1
-    print("Longest palindrome substring is: ", st[start:start + maxLength - 1])
+    print("Longest palindrome substring is: ", st[start:start + maxLength])
  
     return maxLength # return length of LPS
  
