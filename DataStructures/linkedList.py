@@ -409,3 +409,43 @@ def addTwoNumbers(l1, l2):
         
     return dummy.next    
   
+def swapPairs(self, head):
+    """
+    24. Swap Nodes in Pairs
+    Medium
+    Given a linked list, swap every two adjacent nodes and return its head. You must solve the problem without modifying the values in the list's nodes 
+    (i.e., only nodes themselves may be changed.)
+
+    Create a dummy node whose next pointer will point to the current head.
+    Now take a current node which will be used to traverse the list
+    In each iteration, take two nodes, first = current.next and second = current.next.next.
+    Point the next of first to the next of second which is actually the third node from the current.
+    Link the pointers accordingly and at last return the dummy.next.
+
+    :type head: ListNode
+    :rtype: ListNode
+    """
+    if not head or not head.next:
+        return head
+        
+    # Dummy node
+    dummy = ListNode(0)
+    # Point the next of dummy node to the head
+    dummy.next = head
+    # This node will be used to traverse the list
+    curr = dummy
+    # Loop until we reach to the second last node
+    while curr.next and curr.next.next:
+        # First node of the pair
+        first = curr.next
+        # Second node of the pair
+        second = curr.next.next
+        # Point the next of first node to the node after second node
+        first.next = second.next
+        # Now the current node's next should be the second node
+        curr.next = second
+        # Linking the original second node to the first node
+        curr.next.next = first
+        # Move the pointer two nodes ahead
+        curr = curr.next.next
+    return dummy.next
