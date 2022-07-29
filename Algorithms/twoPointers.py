@@ -291,6 +291,49 @@ def isPalindrome2(head):
         
     return True
     
+    
+def removeNthFromEnd(head, n):
+    """
+    19. Remove Nth Node From End of List
+    Medium
+    Given the head of a linked list, remove the nth node from the end of the list and return its head.
+    
+    We are given a linked list and a number n, and we are required to remove the nth from the end of the list. 
+    Since we are removing the nth node, we need to link next pointer of (n - 1)th node to the (n + 1)th node.
+    Once we remove the node, we need to return the head of the modified list.
+    
+    Initialize two pointers slow and fast, pointing to the head of the linked list.
+    Move fast pointer n steps ahead.
+    Now, move both slow and fast one step at a time unless fast reaches to the end. The fast pointer will definitely reach to the end before slow because it is ahead.
+    When we fast pointer reaches to the end, the slow pointer will be n steps behind it i.e., n steps behind the end of the list.
+    At that point, we will remove the node and link it to the next of current node.    
+        
+    :type head: ListNode
+    :type n: int
+    :rtype: ListNode
+    """
+    # Two pointers - fast and slow
+    slow = head
+    fast = head
+    # Move fast pointer n steps ahead
+    for i in range(0, n):
+        if not fast.next:
+            # If n is equal to the number of nodes, delete the head node
+            if i == n - 1:
+                head = head.next
+            return head
+        fast = fast.next
+    # Loop until fast node reaches to the end
+    # Now we will move both slow and fast pointers
+    while fast.next:
+        slow = slow.next
+        fast = fast.next
+    # Delink the nth node from last
+    if slow.next:
+        slow.next = slow.next.next
+    return head    
+    
+    
 def reorderList(head):
     ''' You are given the head of a singly linked-list. The list can be represented as:
         L0 → L1 → … → Ln - 1 → Ln
