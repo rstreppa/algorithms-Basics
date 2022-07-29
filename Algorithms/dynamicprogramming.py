@@ -398,4 +398,109 @@ def uniquePaths2(m, n):
 
     return count[m-1][n-1]
 
+def longestPalindrome(s):
+	'''
+	5. Longest Palindromic Substring
+	Medium
+	Given a string s, return the length of the longest palindromic substring in s.
+	substring is a sequence of characters that is contiguous within a string, different from subsequence
+	Top-down, recursive approach that I understand
+	'''
+	def dfs(X, i, j, lookup):
 
+	    if i > j:
+		return 0
+
+	    if i == j:
+		return 1
+
+	    key = (i, j)
+
+	    if key not in lookup:
+		if X[i] == X[j]:
+		    lookup[key] = dfs(X, i + 1, j - 1, lookup) + 2
+		else:
+		    lookup[key] = max(dfs(X, i, j - 1, lookup),
+				      dfs(X, i + 1, j, lookup))
+
+	    return lookup[key]	
+	
+	
+	n 	= len(s)
+	lookup 	= {}
+	return dfs(s, 0, n - 1, lookup)
+	
+def longestPalindrome2(st):
+	'''
+	5. Longest Palindromic Substring
+	Same problem as above
+	Bottom-up approach that I understand
+	
+	Maintain a boolean table[n][n] that is filled in bottom up manner.
+	The value of table[i][j] is true, if the substring is palindrome, otherwise false.
+	To calculate table[i][j], check the value of table[i+1][j-1], if the value is true and str[i] is same as str[j], then we make table[i][j] true.
+	Otherwise, the value of table[i][j] is made false.
+	We have to fill table previously for substring of length = 1 and length =2 because 
+	as we are finding , if table[i+1][j-1] is true or false , so in case of 
+	(i) length == 1 , lets say i=2 , j=2 and i+1,j-1 doesn’t lies between [i , j] 
+	(ii) length == 2 ,lets say i=2 , j=3 and i+1,j-1 again doesn’t lies between [i , j].
+	
+	'''
+    n = len(st) # get length of input string
+ 
+    # table[i][j] will be false if substring
+    # str[i..j] is not palindrome. Else
+    # table[i][j] will be true
+    table = [[0 for x in range(n)] for y
+                          in range(n)]
+     
+    # All substrings of length 1 are
+    # palindromes
+    maxLength = 1
+    i = 0
+    while (i < n) :
+        table[i][i] = True
+        i = i + 1
+     
+    # check for sub-string of length 2.
+    start = 0
+    i = 0
+    while i < n - 1 :
+        if (st[i] == st[i + 1]):
+            table[i][i + 1] = True
+            start = i
+            maxLength = 2
+        i = i + 1
+     
+    # Check for lengths greater than 2.
+    # k is length of substring
+    k = 3
+    while k <= n :
+        # Fix the starting index
+        i = 0
+        while i < (n - k + 1) :
+             
+            # Get the ending index of
+            # substring from starting
+            # index i and length k
+            j = i + k - 1
+     
+            # checking for sub-string from
+            # ith index to jth index iff
+            # st[i + 1] to st[(j-1)] is a
+            # palindrome
+            if (table[i + 1][j - 1] and
+                      st[i] == st[j]) :
+                table[i][j] = True
+     
+                if (k > maxLength) :
+                    start = i
+                    maxLength = k
+            i = i + 1
+        k = k + 1
+    print("Longest palindrome substring is: ", st[start:start + maxLength - 1])
+ 
+    return maxLength # return length of LPS
+ 
+	
+	
