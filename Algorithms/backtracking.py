@@ -251,7 +251,10 @@ def combinationSum3(k, n):
     return res
 
 def generateParenthesis(n):
-    ''' Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses. 
+    ''' 
+    	22. Generate Parentheses
+	Medium
+    	Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses. 
     '''
     def backtracking(nOpen, nClose, path):
         if n == nClose:  # Found a valid n pairs of parentheses
