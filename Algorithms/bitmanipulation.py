@@ -94,4 +94,63 @@ def countBits2(n):
     for i in range(1, n+1):
         dp[i] = dp[i//2] + i%2
     return dp
+
+def divide(dividend, divisor):
+    """
+	29. Divide Two Integers
+	Medium
+	Given two integers dividend and divisor, divide two integers without using multiplication, division, and mod operator.
+	The integer division should truncate toward zero, which means losing its fractional part. For example, 8.345 would be truncated to 8, 
+	and -2.7335 would be truncated to -2.
+	Return the quotient after dividing dividend by divisor.
+	Note: Assume we are dealing with an environment that could only store integers within the 32-bit signed integer range: [−231, 231 − 1]. 
+	For this problem, if the quotient is strictly greater than 231 - 1, then return 231 - 1, and if the quotient is strictly less than -231, then return -231.    
+
+	How can we improve this 🤔? What if instead of decreasing the dividend linearly, we decrease it exponentially? 
+	This will definitely improve the performance drastically.
+
+	We can follow the below steps —
+
+	A variable quotient will keep the track of answer.
+	A while loop will check the condition dividend >= divisor
+	Inside this while loop, we will have one variable shift which will left shift the divisor by one bit and check if the result is less than the dividend. This will repeat until the condition is false.
+	Once, we are out of inner loop, then we will add the number of times we shifted to the quotient.
+	Also, we will now subtract the result of shifting to divisor from the dividend for the next iteration. Remember that since in the while loop the value of shifting had gone beyond the dividend, the value we need to subtract is one bit less shifted.
+	We will repeat the process unless we reach to the point where divisor is greater than dividend.
+	You must be wondering that why are we shifting the bits? The answer is, one left shift bit means the number is doubled. And since we cannot use multiplication, we are using left shifting.
+
+	x << y
+	Returns x with the bits shifted to the left by y places (and new bits on the right-hand-side are zeros). This is the same as multiplying x by 2**y.
+	x >> y
+	Returns x with the bits shifted to the right by y places. This is the same as //'ing x by 2**y.
+	
+	:type dividend: int
+	:type divisor: int
+	:rtype: int
+    """
+    # MAX and MIN values for integer
+    MAX = 2147483647
+    MIN = -2147483648
+    # Check for overflow
+    if divisor == 0 or (dividend == MIN and divisor == -1):
+        return MAX
+    # Sign of result`
+    sign = -1 if (dividend > 0 and divisor < 0) or (dividend < 0 and divisor > 0) else 1
+    # Quotient
+    quotient = 0
+    # Take the absolute value
+    absoluteDividend = abs(dividend)
+    absoluteDivisor = abs(divisor)
+    # Loop until the  dividend is greater than divisor
+    while absoluteDividend >= absoluteDivisor:
+        # This represents the number of bits shifted or
+        # how many times we can double the number
+        shift = 0
+        while absoluteDividend >= (absoluteDivisor << shift):
+            shift += 1
+        # Add the number of times we shifted to the quotient
+        quotient += (1 << (shift - 1))
+        # Update the dividend for the next iteration
+        absoluteDividend -= absoluteDivisor << (shift - 1)
+    return -quotient if sign == -1 else quotient
     
