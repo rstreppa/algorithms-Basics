@@ -56,3 +56,40 @@ def countLetters(S):
             count += 1
     total += count * (count + 1) // 2 # add last substring
     return total
+
+def multiply(self, num1, num2):
+    """
+        43. Multiply Strings
+        Medium
+        Given two non-negative integers num1 and num2 represented as strings, return the product of num1 and num2, also represented as a string.
+        Note: You must not use any built-in BigInteger library or convert the inputs to integer directly.
+        
+        So this isn’t a very difficult problem, but if you just do the regular multiplication, you can figure it out. Figure below:
+        The basic idea is as follows:
+        (1) can first flip the string, that is, start from the low order calculation.
+        (2) use an array to maintain the final result, updating it every time you multiply it, but pay attention to the carry case () pay attention 
+            to the two  points, the same bit to add the carry, from low to high multiplication is carried. )
+        (3) finally, the 0 in front of the array is discarded and converted to string output.            
+        
+        
+        :type num1: str
+        :type num2: str
+        :rtype: str
+    """
+    res = [0] * (len(num1) + len(num2))  # Initialization, array to hold the product.
+    pos = len(res) - 1
+
+    for n1 in reversed(num1):
+        tempPos = pos
+        for n2 in reversed(num2):
+            res[tempPos] += int(n1) * int(n2)
+            res[tempPos - 1] += res[tempPos] // 10  # Offset
+            res[tempPos] %= 10  # fractional remainder
+            tempPos -= 1
+        pos -= 1
+
+    st = 0
+    while st < len(res) - 1 and res[st] == 0:  # How many zeros are in front of a statistic?
+        st += 1
+    return ''.join(map(str, res[st:])) # Remove the 0, then turn it into a string, and return
+
