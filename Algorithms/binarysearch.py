@@ -222,3 +222,69 @@ def search(nums, target):
         else:
             right = middle - 1
     return -1
+
+def searchRange(self, nums, target):
+    """
+        34. Find First and Last Position of Element in Sorted Array
+        Medium
+        Given an array of integers nums sorted in non-decreasing order, find the starting and ending position of a given target value.
+        If target is not found in the array, return [-1, -1].
+        You must write an algorithm with O(log n) runtime complexity.
+        
+        We will use binary search algorithm to find the first and last occurrences of the target separately.
+
+        1. For first occurrence, we will first find the index of the number and then search again in the left subarray as long as we are finding the number.
+        2. For last occurrence, we will first find the index of the number and then search again in the right subarray as long as we are finding the number.
+
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[int]
+    """
+    def findFirstOccurrence(nums, target):
+        # Left snd right pointers
+        left, right = 0, len(nums) - 1
+        # Index of first occurrence
+        firstOccurrence = -1
+        # Loop until the two pointers meet
+        while left <= right:
+            # Middle index
+            middle = left + (right - left) // 2
+            # Check if we have found the value
+            if target == nums[middle]:
+                firstOccurrence = middle
+                right = middle - 1
+            # If the target is less than the element
+            # at the middle index
+            elif target < nums[middle]:
+                right = middle - 1
+            # If the target is greater than the element
+            # at the middle index
+            else:
+                left = middle + 1
+        return firstOccurrence
+
+
+    def findLastOccurrence(nums, target):
+        # Left snd right pointers
+        left, right = 0, len(nums) - 1
+        # Index of first occurrence
+        lastOccurrence = -1
+        # Loop until the two pointers meet
+        while left <= right:
+            # Middle index
+            middle = left + (right - left) // 2
+            # Check if we have found the value
+            if target == nums[middle]:
+                lastOccurrence = middle
+                left = middle + 1
+            # If the target is less than the element
+            # at the middle index
+            elif target < nums[middle]:
+                right = middle - 1
+            # If the target is greater than the element
+            # at the middle index
+            else:
+                left = middle + 1
+        return lastOccurrence
+
+    return [findFirstOccurrence(nums, target), findLastOccurrence(nums, target)]
