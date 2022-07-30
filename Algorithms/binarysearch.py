@@ -160,3 +160,65 @@ def findKthPositive(arr, k):
         return arr[left] + (k - (arr[left] - left - 1))
     else:
         return k    
+    
+def search(nums, target):
+    """
+    33. Search in Rotated Sorted Array
+    Medium
+    There is an integer array nums sorted in ascending order (with distinct values).
+
+    Prior to being passed to your function, nums is possibly rotated at an unknown pivot index k (1 <= k < nums.length) 
+    such that the resulting array is [nums[k], nums[k+1], ..., nums[n-1], nums[0], nums[1], ..., nums[k-1]] (0-indexed). 
+    For example, [0,1,2,4,5,6,7] might be rotated at pivot index 3 and become [4,5,6,7,0,1,2].
+    Given the array nums after the possible rotation and an integer target, return the index of target if it is in nums, or -1 if it is not in nums.
+    You must write an algorithm with O(log n) runtime complexity. 
+    
+    The approach is simple if we are able to find the index from where the given array is rotated. We can follow below steps to solve this problem —
+    Find the index where the array is rotated. Notice if a sorted array is rotated then the rightmost element will not be the biggest element in the array.
+    Using the information in step #1, we can perform binary search to find the index where the array is rotated.
+    Once we have found that index, then we can easily determine in which half (array will be divided into two halves by the pivot index) of the array 
+    the target lies.
+    Notice, the two halves are themselves will be sorted (this is pretty intuitive, right 😄?).
+    We can then perform binary search once again in the determined half to find the index of the target element.
+    :type nums: List[int]
+    :type target: int
+    :rtype: int
+    """
+    # Special case
+    if not nums or len(nums) == 0:
+        return -1
+    # Left and right pointers for the array
+    left, right = 0, len(nums) - 1
+    # First step is to find the pivot where the array
+    # is rotated
+    while left < right:
+        # Middle index
+        middle = left + (right - left) // 2
+        # If the element at the mid is greater than
+        # the element at the right then we can say that
+        # the array is rotated after middle index
+        if nums[middle] > nums[right]:
+            left = middle + 1
+        # Else, the pivot is in the left part
+        else:
+            right = middle
+    # After the above loop is completed, then the
+    # left index will point to the pivot
+    pivot = left
+    left, right = 0, len(nums) - 1
+    # Now we will find in which half of the array,
+    # our targetValue is present
+    if nums[pivot] <= target and target <= nums[right]:
+        left = pivot
+    else:
+        right = pivot
+    # Now perform normal binary search
+    while left <= right:
+        middle = left + (right - left) // 2
+        if nums[middle] == target:
+            return middle
+        elif nums[middle] < target:
+            left = middle + 1
+        else:
+            right = middle - 1
+    return -1
