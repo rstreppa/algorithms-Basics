@@ -323,7 +323,10 @@ def minDepth2(root):
                 queue.append((node.right, level+1))
                 
 def isSameTree(p, q):
-    ''' Given the roots of two binary trees p and q, write a function to check if they are the same or not.
+    ''' 
+    	100. Same Tree
+	Easy
+	Given the roots of two binary trees p and q, write a function to check if they are the same or not.
         Two binary trees are considered the same if they are structurally identical, and the nodes have the same value.
     '''  
     if p and q:
