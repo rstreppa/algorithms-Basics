@@ -240,6 +240,40 @@ def levelOrder2(root):
         res.append(levelArray)
     return res
 
+def levelOrder2(root):
+    """
+        102. Binary Tree Level Order Traversal
+        Medium
+        Given the root of a binary tree, return the level order traversal of its nodes' values. (i.e., from left to right, level by level).
+        
+        Iterative solution using a queue
+        
+        :type root: TreeNode
+        :rtype: List[List[int]]
+    """
+    res     = []
+    q       = [ root ]
+    
+    while q:          
+        qlen        = len(q)
+        level       = []
+        for i in range(qlen):
+            node    = q.pop(0)                
+            if node:
+                level.append( node.val )
+                q.append( node.left )
+                q.append( node.right )
+        if level:
+            res.append( level )        
+                              
+    return res
+
+
+
+
+
+
+
 def averageOfLevels(root):
     ''' Given the root of a binary tree, return the average value of the nodes on each level in the form of an array. '''
     means       = []
