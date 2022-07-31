@@ -121,7 +121,10 @@ def deleteNode(root, key):
     return root
 
 def isBST(root, minKey, maxKey):
-    ''' Function to determine if given Binary Tree is a BST or not by keeping a
+    ''' 
+    	98. Validate Binary Search Tree
+       	Medium
+    	Function to determine if given Binary Tree is a BST or not by keeping a
         valid range (starting from [MIN_VALUE, MAX_VALUE]) and keep shrinking
         it down for each node as we go down recursively '''
 
