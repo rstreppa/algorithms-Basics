@@ -288,3 +288,32 @@ def generateTrees(self, n):
     
     nums    = list( range( 1, n+1 ) )
     return dfs( nums )
+
+def numTrees(self, n):
+    """
+        96. Unique Binary Search Trees
+        Medium
+        Given an integer n, return the number of structurally unique BST's (binary search trees) which has exactly n nodes of unique values from 1 to n.
+        Careful: if you use the same approach as problem 95, which requires you to list the trees, you get Time Limit Exceeded!
+        
+        The answer is Catalan numbers C_{n+1} = C_0*C_n + C_1*C_{n-1} + ... + C_n*C_0
+        https://brilliant.org/wiki/catalan-numbers/
+        Beacuse for eacch number you multiply the number of left and right subtrees which are obtained by splitting below and above root 
+        It's an iteraitve Dynamic Programming solution
+        :type n: int
+        :rtype: int
+    """
+    dp      = [1] * (n+1) # you will count also tree witgh 0 nodes and tree wioth n nodes
+    
+    # 0 nodes -> 1 tree
+    # 1 node  -> 1 tree
+    
+    for nodes in range( 2, n+1 ):
+        total   = 0
+        for root in range( 1, nodes + 1 ):
+            left    = root - 1
+            right   = nodes - root
+            total   += dp[left] * dp[right]
+        dp[nodes]   = total
+    return dp[n]
+
