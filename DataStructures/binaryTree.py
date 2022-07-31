@@ -42,7 +42,11 @@ def inOrder( root ):
     inOrder( root.right )
 
 def inOrder_stack( root ):
-    ''' Iterative function for inorder tree traversal  '''
+    ''' 
+    	94. Binary Tree Inorder Traversal
+	Easy    	
+	Iterative function for inorder tree traversal  
+    '''
     # Set current to root of binary tree
     current = root
     stack = [] # initialize stack
