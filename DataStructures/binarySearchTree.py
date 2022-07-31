@@ -306,7 +306,7 @@ def numTrees(self, n):
         :type n: int
         :rtype: int
     """
-    dp      = [1] * (n+1) # you will count also tree witgh 0 nodes and tree wioth n nodes
+    dp      = [1] * (n+1) # you will count also tree with 0 nodes and tree with n nodes
     
     # 0 nodes -> 1 tree
     # 1 node  -> 1 tree
