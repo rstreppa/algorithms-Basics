@@ -368,18 +368,24 @@ def spiralOrder(matrix):
     return res
        
 def rotate(matrix):
-    ''' You are given an n x n 2D matrix representing an image, rotate the image by 90 degrees (clockwise).
+    ''' 
+        48. Rotate Image
+        Medium
+        You are given an n x n 2D matrix representing an image, rotate the image by 90 degrees (clockwise).
         You have to rotate the image in-place, which means you have to modify the input 2D matrix directly. 
         DO NOT allocate another 2D matrix and do the rotation.
         here give a common method to solve the image rotation problems.
         clockwise rotate: first reverse up to down, then swap the symmetry
         anticlockwise rotate: first reverse left to right, then swap the symmetry
     '''
-    n           = len(matrix)
-    matrix      = matrix[::-1]
+    n       = len(matrix)
+
     for i in range(n):
         for j in range(i):
             matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]
+
+    for r in range(n):
+        matrix[r].reverse()
     return matrix
 
 def numPairsDivisibleBy60(time):
