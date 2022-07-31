@@ -452,3 +452,27 @@ def canCompleteCircuit(  gas, cost ):
         return -1
     else:
         return start
+    
+    
+    def myPow(x, n):
+    """
+        50. Pow(x, n)
+        Medium
+        Implement pow(x, n), which calculates x raised to the power n (i.e., xn).        
+        
+        Naive implementation will exceed time limit.
+        Smart approach is recursve call that will compute power on the half exponent, thereby reducing to O(log n)
+        :type n: int
+        :rtype: float
+    """
+        def helper( x, n ):
+            if x == 0: return 0
+            if n == 0: return 1
+
+            res = helper( x, n // 2 )
+            res = res * res
+            return x * res if n % 2 else res
+
+
+        res     = helper( x, abs(n) )
+        return res if n >= 0 else 1 / res
