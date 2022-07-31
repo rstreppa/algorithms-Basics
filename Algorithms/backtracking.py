@@ -93,7 +93,10 @@ def subsetsWithDup(nums):
     return res
 
 def permute(nums):
-    ''' Given an array nums of distinct integers, return all the possible permutations. 
+    ''' 
+    	46. Permutations
+	Medium
+	Given an array nums of distinct integers, return all the possible permutations. 
         You can return the answer in any order.
     '''
 	# helper
@@ -101,10 +104,9 @@ def permute(nums):
         if not nums: # -- NOTE [1] 
             res.append(path[::]) #  -- NOTE [2] - append a copy of the path at the leaf before we start popping/backtracking
 
-        for i in range(len(nums)): # [1,2,3]
-            newNums = nums[:i] + nums[i+1:] 
-            path += [nums[i]] 
-            backtrack(newNums, path, res) # - recursive call will make sure I reach the leaf 
+        for i in range(len(nums)): # [1,2,3] 
+            path += [nums[i]]
+            backtrack( nums[:i] + nums[i+1:], path, res ) # - recursive call will make sure I reach the leaf 
             path.pop() # -- NOTE [3]
 
     res = []
