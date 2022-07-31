@@ -255,3 +255,36 @@ def lcap(root, n1, n2):
        n2 = n2.parent
   
     return None
+
+def generateTrees(self, n):
+    """
+        95. Unique Binary Search Trees II
+        Medium
+        Given an integer n, return all the structurally unique BST's (binary search trees), which has exactly n nodes of unique values from 1 to n. 
+        Return the answer in any order.       
+    
+        Remember that a BST has in the left nodes all numbers less than root and right node all numbers grater than root
+        Also the root must be inside the inner loop as it changes with l and r
+        :type n: int
+        :rtype: List[TreeNode]
+    """
+    def dfs( nums ):
+        if not nums:
+            return [ None ]
+        
+        res         = []
+        
+        for i in range( len( nums ) ):
+            left    = dfs( nums[:i] )
+            right   = dfs( nums[i+1:] )
+            for l in left:
+                for r in right:
+                    root        = TreeNode( nums[i] )
+                    root.left   = l
+                    root.right  = r
+                    res.append( root )
+        return res
+    
+    
+    nums    = list( range( 1, n+1 ) )
+    return dfs( nums )
