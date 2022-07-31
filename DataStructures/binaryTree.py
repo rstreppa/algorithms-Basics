@@ -332,7 +332,29 @@ def isSameTree(p, q):
     if p and q:
         return p.data == q.data and isSameTree(p.left, q.left) and isSameTree(p.right, q.right)
     return p is q        
+ 
+def isSymmetric(root):
+    """
+        101. Symmetric Tree
+        Easy
+        Given the root of a binary tree, check whether it is a mirror of itself (i.e., symmetric around its center).
         
+        Variation of problem 100. Same Tree
+        :type root: TreeNode
+        :rtype: bool
+    """
+
+    def isMirror( root1, root2 ):
+        if ( not root1 ) and ( not root2 ):
+            return True
+        if ( not root1 ) or ( not root2 ):
+            return False
+        return root1.val == root2.val  and isMirror( root1.left, root2.right ) and isMirror( root1.right, root2.left )
+    
+    return isMirror( root, root )	
+
+	
+	
 def hasPathSum(root, targetSum):
     ''' Given the root of a binary tree and an integer targetSum, return true 
         if the tree has a root-to-leaf path such that adding up all the values along the path equals targetSum.
