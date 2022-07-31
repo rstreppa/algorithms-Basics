@@ -141,25 +141,35 @@ def permute(nums):
 # This can be problematic because it alters the the previous states. 
 # See below for visual illustration of the problem.  
 
-def permuteUnique(nums):
-    ''' Given a collection of numbers, nums, that might contain duplicates, 
-        return all possible unique permutations in any order.
-    '''
-	# helper
-    def backtrack(nums, path, res):
-        if not nums:
+def permuteUnique(self, nums):
+    """
+        47. Permutations II
+        Medium
+        Given a collection of numbers, nums, that might contain duplicates, return all possible unique permutations in any order.        
+        Since there are duplicates you need to change logic and store in a hash map.
+        Then process with the usual backtracking logic
+        :type nums: List[int]
+        :rtype: List[List[int]]
+    """
+    # helper
+    def backtrack(nums, path, res, d):
+        if len(path) == len(nums):
             res.append(path[::])
+            return
 
-        for i in range(len(nums)): # [1,2,3]
-            if (i > 0) and (nums[i] == nums[i-1]):
-                continue
-            newNums = nums[:i] + nums[i+1:] 
-            path += [nums[i]] 
-            backtrack(newNums, path, res) # - recursive call will make sure I reach the leaf 
-            path.pop()
+        for e in d:
+            if d[e] > 0:
+                path += [e]
+                d[e] -= 1
+                backtrack(nums, path, res, d) # - recursive call will make sure I reach the leaf 
+                d[e] += 1
+                path.pop()
 
     res = []
-    backtrack( nums, [], res )
+    d   = {}
+    for elem in nums:
+        d[elem] = d.get(elem, 0) + 1
+    backtrack( nums, [], res, d )
     return res
 
 def combine(n, k):
