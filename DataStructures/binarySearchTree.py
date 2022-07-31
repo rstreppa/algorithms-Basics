@@ -320,3 +320,69 @@ def numTrees(self, n):
         dp[nodes]   = total
     return dp[n]
 
+class Solution(object):
+    def recoverTree(self, root):
+        """
+            99. Recover Binary Search Tree
+            Medium
+            You are given the root of a binary search tree (BST), where the values of exactly two nodes of the tree were swapped by mistake. 
+            Recover the tree without changing its structure.
+            :type root: TreeNode
+            :rtype: None Do not return anything, modify root in-place instead.
+        """
+        
+        def swap( x, y ):
+            temp = x.val
+            x.val = y.val
+            y.val = temp
+
+        def inorder(root):
+            if not root:
+                return
+
+            inorder(root.left)
+
+            if self.pred and root.val < self.pred.val:
+                self.y = root
+                if not self.x:
+                    self.x = self.pred
+                else:
+                    return
+            self.pred = root
+
+            inorder(root.right)
+
+        self.pred   = None
+        self.x      = None  # 1st wrong node
+        self.y      = None  # 2nd wrong node
+        inorder(root)
+        swap(self.x, self.y)
+
+class Solution(object):
+    def recoverTree2(self, root):
+        """
+            99. Recover Binary Search Tree
+            Medium
+            You are given the root of a binary search tree (BST), where the values of exactly two nodes of the tree were swapped by mistake. 
+            Recover the tree without changing its structure.
+	    
+	    Easier solution that captures the essence of the problem: inorder traversal of the BST 
+            :type root: TreeNode
+            :rtype: None Do not return anything, modify root in-place instead.
+        """
+        
+        self.temp = []
+        
+        def dfs( node ):	# in order traversal
+            if not node:    return
+            dfs( node.left )
+            self.temp.append( node )
+            dfs( node.right )
+            
+        dfs( root )
+        
+        srt = sorted( n.val for n in self.temp )
+        
+        for i in range( len( srt ) ):
+            self.temp[i].val = srt[i]
+
