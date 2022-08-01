@@ -497,3 +497,63 @@ class BSTIterator(object):
 # obj = BSTIterator(root)
 # param_1 = obj.next()
 # param_2 = obj.hasNext()
+
+def kthSmallest(root, k):
+    """
+        230. Kth Smallest Element in a BST
+        Medium
+        Given the root of a binary search tree, and an integer k, return the kth smallest value 
+        (1-indexed) of all the values of the nodes in the tree.
+            
+        Easy to solve with a stack 
+            
+        :type root: TreeNode
+        :type k: int
+        :rtype: int
+    """
+    curr    = root
+    s       = []
+        
+    while True:
+        if curr:
+            s.append( curr )
+            curr    = curr.left
+        elif s:
+            curr    = s.pop()
+            k       -= 1
+            if  k == 0:
+                return curr.val
+            curr    = curr.right
+        else:
+            break
+	
+class Solution(object):
+    def kthSmallest2(self, root, k):
+        """
+            230. Kth Smallest Element in a BST
+            Medium
+            Given the root of a binary search tree, and an integer k, return the kth smallest value 
+            (1-indexed) of all the values of the nodes in the tree.
+            
+            Recursive solution
+            
+            :type root: TreeNode
+            :type k: int
+            :rtype: int
+        """
+        self.count  = 0
+        self.res    = 0
+        self.dfs( root, k)
+        return self.res
+    
+    def dfs( self, root, k ):
+        if root.left:
+            self.dfs( root.left, k )
+        
+        self.count  += 1
+        if self.count == k:
+            self.res = root.val
+            return
+        
+        if root.right:
+            self.dfs( root.right, k )
