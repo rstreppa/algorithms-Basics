@@ -407,3 +407,37 @@ def sortedArrayToBST(self, nums):
         return root
         
     return buildBST(nums)        
+
+class Solution(object):
+    def sortedListToBST(self, head):
+        """
+            109. Convert Sorted List to Binary Search Tree
+            Medium
+            Given the head of a singly linked list where elements are sorted in ascending order, convert it to a height balanced BST.
+            For this problem, a height-balanced binary tree is defined as a binary tree in which the depth of the two subtrees of every node 
+            never differ by more than 1.
+            
+            Easy once you have solved 108. Convert Sorted Array to Binary Search Tree
+            
+            :type head: Optional[ListNode]
+            :rtype: Optional[TreeNode]
+        """
+        
+        if not head:
+            return None
+        if not head.next:
+            return TreeNode( head.val )
+        
+        slow    = fast  = head
+        prev    = None
+        while fast and fast.next:
+            prev    = slow
+            slow    = slow.next
+            fast    = fast.next.next
+            
+        prev.next   = None
+        root        = TreeNode( slow.val )
+        root.left   = self.sortedListToBST( head )
+        root.right  = self.sortedListToBST( slow.next )
+        
+        return root
