@@ -201,7 +201,11 @@ def inOrderSuccessorp(root):
     return parent
 
 def lca(root, n1, n2):
-    ''' A recursive python program to find LCA least common ancestor of two nodes n1 and n2'''
+    ''' 
+    	235. Lowest Common Ancestor of a Binary Search Tree
+	Easy
+    	A recursive python program to find LCA least common ancestor of two nodes n1 and n2
+    '''
     # Base Case
     if not root:
         return root
@@ -219,7 +223,11 @@ def lca(root, n1, n2):
     return root
 
 def lcaIterative(root, n1, n2):
-    ''' An iterative python program to find LCA least common ancestor of two nodes n1 and n2'''
+    ''' 
+    	235. Lowest Common Ancestor of a Binary Search Tree
+	Easy
+	An iterative python program to find LCA least common ancestor of two nodes n1 and n2
+    '''
     while root:
         # If both n1 and n2 are smaller than root,
         # then LCA lies in left
