@@ -142,7 +142,10 @@ def levelOrder_queue( root ):
             queue.append(node.right)
 
 def maxDepth( root ):
-    ''' Compute the "maxDepth" of a tree -- the number of
+    ''' 
+	104. Maximum Depth of Binary Tree
+	Easy
+	Compute the "maxDepth" of a tree -- the number of
         nodes along the longest path from the root node
         down to the farthest leaf node.'''
     if root is None:
