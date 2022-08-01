@@ -386,3 +386,24 @@ class Solution(object):
         for i in range( len( srt ) ):
             self.temp[i].val = srt[i]
 
+def sortedArrayToBST(self, nums):
+    """
+        108. Convert Sorted Array to Binary Search Tree
+        Easy
+        Given an integer array nums where the elements are sorted in ascending order, convert it to a height-balanced binary search tree.
+        A height-balanced binary tree is a binary tree in which the depth of the two subtrees of every node never differs by more than one.
+        :type nums: List[int]
+        :rtype: TreeNode
+    """
+    
+    def buildBST(nums):
+        n           = len(nums)
+        if n == 0:
+            return
+        i           = n // 2
+        root        = TreeNode( nums[i] )
+        root.left   = buildBST( nums[:i] )
+        root.right  = buildBST( nums[i+1:] )
+        return root
+        
+    return buildBST(nums)        
