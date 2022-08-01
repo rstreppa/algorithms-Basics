@@ -269,6 +269,32 @@ def levelOrder2(root):
     return res
 
 
+def zigzagLevelOrder(self, root):
+    """
+        103. Binary Tree Zigzag Level Order Traversal
+        Medium
+        Given the root of a binary tree, return the zigzag level order traversal of its nodes' values. (i.e., from left to right, 
+        then right to left for the next level and alternate between).   
+        
+        L>ook azt it to get a grasp of using queue for level order traversal
+        :type root: TreeNode
+        :rtype: List[List[int]]
+    """
+    if root is None:
+        return []
+    q           = [ root ]
+    res         = []
+    while q:
+        level   = []
+        for _ in range(len(q)):
+            node = q.pop(0)
+            level.append(node.val)
+            if node.left:
+                q.append(node.left)
+            if node.right:
+                q.append(node.right)
+        res.append(level)
+    return [ arr[::-1] if i%2 != 0 else arr for i, arr in enumerate(res) ]            
 
 
 
