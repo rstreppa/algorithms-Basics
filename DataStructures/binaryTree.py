@@ -88,6 +88,44 @@ def preOrder( root ):
     preOrder( root.left )
     preOrder( root.right )
  
+	
+def iterativePreorder(root):
+    ''' 
+    	iterative-preorder-traversal
+	1. Create an empty stack nodeStack and push root node to stack. 
+	2. Do the following while nodeStack is not empty. 
+		- Pop an item from the stack and print it. 
+		- Push right child of a popped item to stack 
+		- Push left child of a popped item to stack
+		  The right child is pushed before the left child to make sure that the left subtree is processed first.
+    '''
+
+   # Base CAse
+   if not root:
+   	return
+ 
+    # create an empty stack and push root to it
+    s = [ root ]
+    
+    # Pop all items one by one. Do following for every popped item
+    # a) print it
+    # b) push its right child
+    # c) push its left child
+    # Note that right child is pushed first so that left
+    # is processed first */
+    while s:         
+        # Pop the top item from stack and print it
+        node = s.pop()
+        print (node.data, end=" ")
+         
+        # Push right and left children of the popped node
+        # to stack
+        if node.right:
+            s.append(node.right)
+        if node.left:
+            s.append(node.left)
+
+	
 def height( root ):
     ''' Compute the "height" of a tree -- the number of
         nodes along the longest path from the root node
