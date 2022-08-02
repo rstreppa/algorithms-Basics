@@ -32,6 +32,40 @@ def postOrder( root ):
     postOrder( root.right )
     print( str( root.data ) + " ", end='')
     
+def postorderIterative(root):
+    '''
+    	To convert the above recursive procedure into an iterative one, we need an explicit stack. 
+	Following is a simple stack-based iterative algorithm to perform postorder traversal:
+    '''
+ 
+    # return if the tree is empty
+    if not root:
+        return
+ 
+    # create an empty stack and push the root node
+    s = [ root ]
+ 
+    # create another stack to store postorder traversal
+    out = []
+ 
+    # loop till stack is empty
+    while s:
+ 
+        # pop a node from the stack and push the data into the output stack
+        curr = s.pop()
+        out.append(curr.data)
+ 
+        # push the left and right child of the popped node into the stack
+        if curr.left:
+            s.append(curr.left)
+ 
+        if curr.right:
+            s.append(curr.right)
+ 
+    # print postorder traversal
+    while out:
+        print(out.pop(), end=' ')
+
 def inOrder( root ):
     ''' Given a binary tree, print its nodes in inorder '''
     if root is None:
