@@ -450,3 +450,30 @@ def earliestAcq(logs, N):
             parent[pb] = pa
     return -1    
     
+def findJudge(self, n, trust):
+    """
+        997. Find the Town Judge
+        Easy
+        In a town, there are n people labeled from 1 to n. There is a rumor that one of these people is secretly the town judge.
+        If the town judge exists, then:
+        The town judge trusts nobody.
+        Everybody (except for the town judge) trusts the town judge.
+        There is exactly one person that satisfies properties 1 and 2.
+        You are given an array trust where trust[i] = [ai, bi] representing that the person labeled ai trusts the person labeled bi.
+        Return the label of the town judge if the town judge exists and can be identified, or return -1 otherwise.
+        :type n: int
+        :type trust: List[List[int]]
+        :rtype: int
+    """
+    
+    d       = defaultdict(set)
+    dnot    = defaultdict(set)
+    for edge in trust:
+        u, v    = edge
+        d[v].add(u)
+        dnot[u].add(v)
+     
+    for i in range( 1, n+1 ):
+        if len( d[i] ) == n-1 and len( dnot[i] ) == 0:
+            return i
+    return -1
