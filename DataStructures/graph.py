@@ -260,7 +260,9 @@ def isCycleExist(n, graph):
         return True
          
 def validPath(n, edges, source, destination):
-    ''' There is a bi-directional graph with n vertices, where each vertex is labeled from 0 to n - 1 (inclusive). 
+    ''' 
+        1971. Find if Path Exists in Graph
+        There is a bi-directional graph with n vertices, where each vertex is labeled from 0 to n - 1 (inclusive). 
         The edges in the graph are represented as a 2D integer array edges, where each edges[i] = [ui, vi] 
         denotes a bi-directional edge between vertex ui and vertex vi. 
         Every vertex pair is connected by at most one edge, and no vertex has an edge to itself.
@@ -289,7 +291,9 @@ def validPath(n, edges, source, destination):
     return dfs(source, visited)  
 
 def validPath2(n, edges, start, end):
-    ''' # Time:  O(|V| + |E|)
+    ''' 
+        1971. Find if Path Exists in Graph
+        # Time:  O(|V| + |E|)
         # Space: O(|V| + |E|)
         # bfs solution
     '''
