@@ -667,9 +667,32 @@ def minimumSemesters( N, relations ):
         return res if coursesTaken == N else -1
     
                 
-                
-                
-                
+ def treeDiameter( self, edges ):
+    """
+        1245. Tree Diameter
+        Given an undirected tree, return its diameter: the number of edges in a longest path in that tree.
+
+        The tree is given as an array of edges where edges[i] = [u, v] is a bidirectional edge between nodes u and v.  
+        Each node has labels in the set {0, 1, ..., edges.length}.
         
+    """
+    
+    def dfs( u, parent, length ):
+        self.best   = max( self.best, ( length, u ) )
+        for neighbor in d[u]:
+            if neighbor != parent:
+                dfs( neighbor, u, length + 1 )
+
+    d   = defaultdict(list)
+    for u, v in edges:          # O(n)
+        d[u].append(v)
+        d[v].append(u)
         
+    self.best   = (-1, -1) # ( length, furthest_node_from_dfs_start )
+    dfs( 0, -1, 0)          # find the first node from 0 (pick 0)   # O(n)
+    furthest    = self.best[1]
+    self.best   = (-1, -1) 
+    dfs( furthest, -1, 0 )          # O(n)
+    return self.best[0]
+    
         
