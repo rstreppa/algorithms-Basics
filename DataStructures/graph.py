@@ -695,4 +695,61 @@ def minimumSemesters( N, relations ):
     dfs( furthest, -1, 0 )          # O(n)
     return self.best[0]
     
+def findRedundantConnection(self, edges):
+    """
+        684. Redundant Connection
+        Medium
+        In this problem, a tree is an undirected graph that is connected and has no cycles.
+
+        You are given a graph that started as a tree with n nodes labeled from 1 to n, with one
+        additional edge added. The added edge has two different vertices chosen from 1 to n, 
+        and was not an edge that already existed. The graph is represented as an array edges 
+        of length n where edges[i] = [ai, bi] indicates that there is an edge between nodes 
+        ai and bi in the graph.
+
+        Return an edge that can be removed so that the resulting graph is a tree of n nodes. 
+        If there are multiple answers, return the answer that occurs last in the input.
+            
+        * Find: Determine which subset a particular element is in. 
+        This can be used for determining if two elements are in the same subset.
+        * Union: Join two subsets into a single subset. Here first we have to check if the two
+        subsets belong to same set. If no, then we cannot perform union.            
+            
+        https://www.geeksforgeeks.org/union-find-algorithm-set-2-union-by-rank/
+            
+        :type edges: List[List[int]]
+        :rtype: List[int]
+    """
         
+    parent  = [ i for i in range( len(edges) + 1 ) ]
+    rank    = [1] * ( len(edges) + 1 )
+        
+    # A utility function to find the subset of an element n
+    def find(n):    
+        p   = parent[n]
+        while p != parent[p]:
+            parent[p]   = parent[parent[p]]
+            p           = parent[p]
+        return p
+        
+    # A utility function to do union of two subsets
+    # The above operations can be optimized to O(Log n) in worst case. 
+    # The idea is to always attach smaller depth tree under the root of the deeper tree. 
+    # This technique is called union by rank. 
+    # return False if can't complete
+    def union( n1, n2 ):
+        p1, p2          = find(n1), find(n2)
+        if p1 == p2:
+            return False
+        if rank[p1] > rank[p2]:
+            parent[p2]  = p1
+            rank[p1]    += rank[p2]
+        else:
+            parent[p1]  = p2
+            rank[p2]    += rank[p1]
+        return True
+        
+    for n1, n2 in edges:
+        if not union( n1, n2 ):
+            return [n1, n2]
+
