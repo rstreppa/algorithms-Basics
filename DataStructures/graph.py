@@ -531,3 +531,29 @@ def allPathsSourceTarget(graph):
                 q.append( temp + [v] )
           
     return res
+
+def findSmallestSetOfVertices(n, edges):
+    """        
+    1557. Minimum Number of Vertices to Reach All Nodes
+    Medium
+    Given a directed acyclic graph, with n vertices numbered from 0 to n-1, and an array edges where edges[i] = [fromi, toi] represents a directed edge 
+    from node fromi to node toi.
+    Find the smallest set of vertices from which all nodes in the graph are reachable. It's guaranteed that a unique solution exists.
+
+    Notice that you can return the vertices in any order.
+    :type n: int
+    :type edges: List[List[int]]
+    :rtype: List[int]
+    """
+
+    inDegree    = {}
+    for u, v in edges:
+        inDegree[v] = inDegree.get(v, 0) + 1
+        
+    res = []
+    
+    for i in range(n):
+        if i not in inDegree or inDegree[i] == 0:
+            res.append(i)
+    return res
+
