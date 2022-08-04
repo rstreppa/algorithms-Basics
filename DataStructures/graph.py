@@ -477,3 +477,57 @@ def findJudge(self, n, trust):
         if len( d[i] ) == n-1 and len( dnot[i] ) == 0:
             return i
     return -1
+
+
+def allPathsSourceTarget(graph):
+    """
+        797. All Paths From Source to Target
+        Medium
+        Given a directed acyclic graph (DAG) of n nodes labeled from 0 to n - 1, find all possible paths from node 0 to node n - 1 and return them in any order.
+        The graph is given as follows: graph[i] is a list of all nodes you can visit from node i (i.e., there is a directed edge from node i to node graph[i][j]).
+        
+         Recursive solution - see backtracking
+         :type graph: List[List[int]]
+        :rtype: List[List[int]]
+    """
+    def dfs( source, dest, graph, path, res ):
+        for v in graph[source]:
+            if v == dest:
+                res.append(path[::]+[v])
+            else:
+                path    += [v]
+                dfs( v, dest, graph, path, res )
+                path.pop()
+        
+        
+    n       = len(graph)
+    res     = []
+    dfs( 0, n-1, graph, [0], res ) 
+    return res
+
+def allPathsSourceTarget(graph):
+    """
+        797. All Paths From Source to Target
+        Medium
+        Given a directed acyclic graph (DAG) of n nodes labeled from 0 to n - 1, find all possible paths from node 0 to node n - 1 and return them in any order.
+        The graph is given as follows: graph[i] is a list of all nodes you can visit from node i (i.e., there is a directed edge from node i to node graph[i][j]).
+        
+         Iterative solution BFS with queue
+         :type graph: List[List[int]]
+        :rtype: List[List[int]]
+    """
+        
+    n       = len(graph)
+    res     = []
+    q       = [[0]]
+    dest    = n-1
+    
+    while q:
+        temp = q.pop(0)
+        if temp[-1] == dest:
+            res.append(temp)
+        else:
+            for v in graph[temp[-1]]:
+                q.append( temp + [v] )
+          
+    return res
