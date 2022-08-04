@@ -629,3 +629,47 @@ def findCircleNum(isConnected):
                         q.append(neighbor)
     return res
 
+
+def minimumSemesters( N, relations ):
+    """
+        1136. Parallel Courses
+        There are N courses, labelled from 1 to N.
+        We are given relations[i] = [X, Y], representing a prerequisite relationship between course X and course Y: course X has to be studied before course Y.
+        In one semester you can study any number of courses as long as you have studied all the prerequisites for the course you are studying.
+        Return the minimum number of semesters needed to study all courses.  If there is no way to study all the courses, return -1. 
+        
+        BFS solution  with a queue
+    """
+    d                           = defaultdict(list)   
+    inDegree                    = defaultdict(int)
+    
+    for relation in relations:
+        prereq                  = relation[0]
+        course                  = relation[1]
+        d[prereq].append(course)
+        inDegree[course]        += 1
+        
+        q                       = [ i for i in range(1, N+1) if i not in inDegree ]
+        res                     = 0
+        coursesTaken            = 0
+        
+        while q:
+            res                 += 1
+            
+            for _ in range(len(q)):
+                v               = q.pop(0)
+                coursesTaken    += 1    
+                for neighbor in d[v]:
+                    inDegree[neighbor]  -= 1
+                    if inDegree[neighbor] == 0:
+                        q.append(neighbor)
+                       
+        return res if coursesTaken == N else -1
+    
+                
+                
+                
+                
+        
+        
+        
