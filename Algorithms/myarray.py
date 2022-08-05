@@ -1079,3 +1079,44 @@ def merge(nums1, m, nums2, n):
 		nums1[i] = nums2[i]
 
     return nums1
+
+def islandPerimeter(grid):
+    """
+    463. Island Perimeter
+    Easy
+    You are given row x col grid representing a map where grid[i][j] = 1 represents land 
+    and grid[i][j] = 0 represents water.
+
+    Grid cells are connected horizontally/vertically (not diagonally). 
+    The grid is completely surrounded by water, and there is exactly one island 
+    (i.e., one or more connected land cells).
+
+    The island doesn't have "lakes", meaning the water inside isn't connected to the water 
+    around the island. One cell is a square with side length 1. The grid is rectangular, 
+    width and height don't exceed 100. Determine the perimeter of the island.
+        
+    We can improve that to just checking two neighbors. As we right and down in the grid 
+    to traverse it, we can only keep a check of left and up cells to a land cell. 
+    We can assume that every land cell contributes ‘4’ to the perimeter of the island. 
+    But if a land cell shares its side(s) with any other cell, we will subtract 2 from it
+    (one for its shared side and one as the other cell shares a side too). 
+    The time complexity of both the solutions is the same but we somewhat improve on grounds
+    of operation in this approach.
+        
+    :type grid: List[List[int]]
+    :rtype: int
+    """
+    res     = 0
+    n       = len(grid)
+    m       = len(grid[0])
+        
+    for i in range(n):
+        for j in range(m):
+            if grid[i][j] == 1:
+                res     += 4
+                if i > 0 and grid[i-1][j] == 1:
+                    res -= 2
+                if j > 0 and grid[i][j-1] == 1:
+                    res -= 2
+                    
+    return res
