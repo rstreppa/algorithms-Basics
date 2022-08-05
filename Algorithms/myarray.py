@@ -1120,3 +1120,26 @@ def islandPerimeter(grid):
                     res -= 2
                     
     return res
+
+def findMaxConsecutiveOnes(nums):
+    """
+        485. Max Consecutive Ones
+        Easy
+        Given a binary array nums, return the maximum number of consecutive 1's in the array.
+
+        Easy but not too much, look carefully at it and absorb the pattern - avoid double loop liek the plague - 
+            
+        :type nums: List[int]
+        :rtype: int
+    """
+        
+    count_global    = 0
+    count_cur       = 0
+    for i in nums:
+        if i == 1:
+            count_cur += 1
+        else:
+            if count_cur > count_global:
+                count_global = count_cur
+            count_cur = 0
+    return max(count_global, count_cur)
