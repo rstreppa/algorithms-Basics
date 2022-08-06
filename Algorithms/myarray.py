@@ -1245,3 +1245,30 @@ def findMaxConsecutiveOnes(nums):
                     break
                
         return res
+
+    def nextGreaterElements(self, nums):
+        """
+            503. Next Greater Element II
+            Medium
+            Given a circular integer array nums (i.e., the next element of nums[nums.length - 1] is nums[0]), return the next greater number for every element in nums.
+
+            The next greater number of a number x is the first greater number to its traversing-order next in the array, which means you could search circularly 
+            to find its next greater number. If it doesn't exist, return -1 for this number.
+            
+            Monotonic stack O(n)
+	    
+            https://www.youtube.com/watch?v=_t_GfZ5QBUY
+	    
+            :type nums: List[int]
+            :rtype: List[int]
+        """
+        n   = len(nums)
+        res = [-1] * n
+        s   = []
+
+        for _ in range(2):
+            for i, num in enumerate(nums):
+                while s and num > nums[s[-1]]:
+                    res[s.pop()]    = num
+                s.append(i)
+        return res
