@@ -1176,3 +1176,72 @@ def findMaxConsecutiveOnes(nums):
                 count_global = count_cur
             count_cur = 0
     return max(count_global, count_cur)
+
+    def nextGreaterElement(self, nums1, nums2):
+        """
+            496. Next Greater Element I
+            Easy
+            The next greater element of some element x in an array is the first greater element that is to the right of x in the same array.
+            You are given two distinct 0-indexed integer arrays nums1 and nums2, where nums1 is a subset of nums2.
+            For each 0 <= i < nums1.length, find the index j such that nums1[i] == nums2[j] and determine the next greater element of nums2[j] in nums2. 
+            If there is no next greater element, then the answer for this query is -1.
+            Return an array ans of length nums1.length such that ans[i] is the next greater element as described above.
+            
+            Monotonic stack solution in O(n+m)
+            
+            :type nums1: List[int]
+            :type nums2: List[int]
+            :rtype: List[int]
+        """
+        res     = []
+        s       = []
+        d       = {}
+        
+        for elem in nums2:
+            #put in table the pair <value, next greater> until stack empty or elem < stack.peek()
+            while s and elem > s[-1]:
+                d[s.pop()] = elem
+            #push in stack
+            s.append(elem)
+        
+        #put in table the pairs of remaining element in stack
+        while s:
+            d[s.pop()] = -1
+        
+        #populate answer list with result in table
+        for elem in nums1:
+            if elem in d:
+                res.append(d[elem])
+        
+        return res
+
+    def nextGreaterElement(self, nums1, nums2):
+        """
+            496. Next Greater Element I
+            Easy
+            The next greater element of some element x in an array is the first greater element that is to the right of x in the same array.
+            You are given two distinct 0-indexed integer arrays nums1 and nums2, where nums1 is a subset of nums2.
+            For each 0 <= i < nums1.length, find the index j such that nums1[i] == nums2[j] and determine the next greater element of nums2[j] in nums2. 
+            If there is no next greater element, then the answer for this query is -1.
+            Return an array ans of length nums1.length such that ans[i] is the next greater element as described above.
+            
+            Naive solution in O(n*m)
+            
+            :type nums1: List[int]
+            :type nums2: List[int]
+            :rtype: List[int]
+        """
+        res         = [-1] * len(nums1)
+        nums1Idx    = { n: i for i, n in enumerate(nums1) }
+        d       = {}
+   
+        for i in range(len(nums2)):
+            if nums2[i] not in nums1Idx:
+                continue
+            for j in range(i+1, len(nums2)):
+                if nums2[j] > nums2[i]:
+                    idx         = nums1Idx[nums2[i]]
+                    res[idx]    = nums2[j]
+                    break
+               
+        return res
