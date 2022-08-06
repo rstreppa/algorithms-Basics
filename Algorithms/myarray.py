@@ -1353,3 +1353,44 @@ def findMaxConsecutiveOnes(nums):
             result[0] = min(result[0] , ops[i][0])
             result[1] = min(result[1] , ops[i][1])
         return result[0]*result[1]                    
+
+    def findRestaurant(self, list1, list2):
+        """
+            599. Minimum Index Sum of Two Lists
+            Easy
+            Suppose Andy and Doris want to choose a restaurant for dinner, and they both have a list of favorite restaurants represented by strings.
+            You need to help them find out their common interest with the least list index sum. If there is a choice tie between answers, 
+            output all of them with no order requirement. You could assume there always exists an answer.
+            :type list1: List[str]
+            :type list2: List[str]
+            :rtype: List[str]
+        """
+        d1      = {}
+        d2      = {}
+        common  = {}
+        for i in range(len(list1)):    
+            d1[list1[i]] = i 
+                        
+        for j in range(len(list2)):
+            d2[list2[j]] = j 
+            
+        for i in d1:        
+            if i in d2:
+                common[i] = d1[i] + d2[i]
+                     
+        common  = list(common.items())
+        
+        res     = []
+        minimum = float("inf")
+        
+        for  i in range(0,len(common)):
+            
+            if common[i][1] < minimum:
+                minimum = common[i][1]
+                
+        for i in range(len(common)):
+            
+            if common[i][1] == minimum:
+                res.append(common[i][0])
+        
+        return res
