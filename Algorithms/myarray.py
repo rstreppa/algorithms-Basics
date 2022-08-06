@@ -1306,3 +1306,25 @@ def findMaxConsecutiveOnes(nums):
         for num in score:
             res.append(d[num])
         return res
+
+    def findLHS(self, nums):
+        """
+        594. Longest Harmonious Subsequence
+        Easy
+        We define a harmonious array as an array where the difference between its maximum value and its minimum value is exactly 1.
+        Given an integer array nums, return the length of its longest harmonious subsequence among all its possible subsequences.
+        A subsequence of array is a sequence that can be derived from the array by deleting some or no elements without changing the order of the remaining elements.
+        :type nums: List[int]
+        :rtype: int
+        """
+        res     = 0 
+        d       = {}
+        for elem in nums:
+            d[elem] = d.get( elem, 0 ) + 1
+        if len(d) <= 1:
+            return 0
+        for key in d:
+            if key + 1 in d:
+                res = max(res, d[key] + d[key + 1])
+
+        return res        
