@@ -460,6 +460,39 @@ def longestConsecutive(nums):
             best = max(best, y - x)
     return best    
 
+
+def longestArithSeqLength(A):
+    """
+        1027. Longest Arithmetic Subsequence
+        Medium
+        Given an array nums of integers, return the length of the longest arithmetic subsequence in nums.
+        Recall that a subsequence of an array nums is a list nums[i1], nums[i2], ..., nums[ik] with 0 <= i1 < i2 < ... < ik <= nums.length - 1, 
+        and that a sequence seq is arithmetic if seq[i+1] - seq[i] are all the same value (for 0 <= i < seq.length - 1).
+        
+        Dynamic programming solution 
+        
+        https://www.youtube.com/watch?v=-NIlLdVKBFs
+        
+        :type nums: List[int]
+        :rtype: int
+    """
+    
+    n       = len(A)
+    if 0 == n:
+        return 0
+    res     = 0
+    dp      = [ {} for i in range(n) ]
+    for i in range(n):
+        for j in range(0,i):
+            diff            = A[i]-A[j]
+            if diff in dp[j]:
+                dp[i][diff] = dp[j][diff] + 1
+            else:
+                dp[i][diff] = 2
+            res             =max( res, dp[i][diff] )
+    return res
+
+
 def maxScoreSightseeingPair(values):
     ''' You are given an integer array values where values[i] represents the value of the ith sightseeing spot. 
         wo sightseeing spots i and j have a distance j - i between them.
