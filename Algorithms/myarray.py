@@ -1440,3 +1440,31 @@ def findLengthOfLCIS(self, nums):
             res     = max(res, count)
             count   = 1
     return max(res, count)
+
+def findShortestSubArray(self, nums):
+    """
+        697. Degree of an Array
+        Easy
+        Given a non-empty array of non-negative integers nums, the degree of this array is defined as the maximum frequency of any one of its elements.
+        Your task is to find the smallest possible length of a (contiguous) subarray of nums, that has the same degree as nums.
+        :type nums: List[int]
+        :rtype: int
+    """
+    
+    d                       = {}
+    for i in range(len(nums)):
+        d[nums[i]]          = d.get(nums[i],[0,i,i])
+        d[nums[i]][0]       += 1
+        if d[nums[i]][1] != i:
+            d[nums[i]][2]   = i
+            
+    mx                      = 0
+    diff                    = sys.maxsize
+    for k,v in d.items():
+        if v[0] > mx:
+            mx              = v[0]
+            diff            = v[2] - v[1]
+        elif v[0] == mx:
+            if v[2] - v[1] < diff:
+                diff        = v[2] - v[1]
+    return diff+1        
