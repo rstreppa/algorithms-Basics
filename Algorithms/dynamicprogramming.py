@@ -38,6 +38,29 @@ def climbStairs(n):
     return dp[n]
 
 
+def minCostClimbingStairs(self, cost):
+    """
+        746. Min Cost Climbing Stairs
+        Easy
+        You are given an integer array cost where cost[i] is the cost of ith step on a staircase. Once you pay the cost, 
+        you can either climb one or two steps.
+        You can either start from the step with index 0, or the step with index 1.
+        Return the minimum cost to reach the top of the floor.        
+
+        Dynamic Programming solution , very well explained here
+        https://www.youtube.com/watch?v=ktmzAZWkEZ0
+
+        :type cost: List[int]
+        :rtype: int
+    """
+    
+    cost.append(0)
+    
+    for i in range( len(cost) -3, -1, -1 ):
+        cost[i]     += min( cost[i+1], cost[i+2] )
+        
+    return  min( cost[0], cost[1] )
+
 def maxProfit(prices):
     ''' 
         You are given an array prices where prices[i] is the price of a given stock on the ith day.
