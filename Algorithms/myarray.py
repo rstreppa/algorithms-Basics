@@ -388,6 +388,21 @@ def rotate(matrix):
         matrix[r].reverse()
     return matrix
 
+def transpose(self, matrix):
+    """
+    867. Transpose Matrix
+    Easy
+    Given a 2D integer array matrix, return the transpose of matrix.
+    The transpose of a matrix is the matrix flipped over its main diagonal, switching the matrix's row and column indices.
+    :type matrix: List[List[int]]
+    :rtype: List[List[int]]
+    """
+    n = [[0]*len(matrix) for i in range(len(matrix[0]))]
+    for i in range(len(matrix)):
+        for j in range(len(matrix[0])):
+            n[j][i] = matrix[i][j]
+    return n
+
 def numPairsDivisibleBy60(time):
     ''' You are given a list of songs where the ith song has a duration of time[i] seconds.
         Return the number of pairs of songs for which their total duration in seconds is divisible by 60. 
