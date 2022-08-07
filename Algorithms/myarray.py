@@ -1468,3 +1468,55 @@ def findShortestSubArray(self, nums):
             if v[2] - v[1] < diff:
                 diff        = v[2] - v[1]
     return diff+1        
+
+def isOneBitCharacter(self, bits):
+    """
+        717. 1-bit and 2-bit Characters
+        Easy
+        We have two special characters:
+        The first character can be represented by one bit 0.
+        The second character can be represented by two bits (10 or 11).
+        Given a binary array bits that ends with 0, return true if the last character must be a one-bit character.
+        
+        Recursive solution easy to understand
+        
+        :type bits: List[int]
+        :rtype: bool
+    """
+    
+    if bits == [0, 0]  or bits == [0] :
+        return True
+    elif bits == [1, 0]  or bits == [1, 1] :
+        return False
+    else:
+        if bits[0] == 1:
+            return self.isOneBitCharacter(bits[2:])
+        else:
+            return self.isOneBitCharacter(bits[1:])
+
+   def isOneBitCharacter(self, bits):
+    """
+        717. 1-bit and 2-bit Characters
+        Easy
+        We have two special characters:
+        The first character can be represented by one bit 0.
+        The second character can be represented by two bits (10 or 11).
+        Given a binary array bits that ends with 0, return true if the last character must be a one-bit character.
+        
+        Iterative solution easy to understand
+        The trick is if start 0, this one must be one bit character, then if start 1 it must be a two bit character.
+        just moving forward, the rest of the bit, follows the same rule.
+        
+        :type bits: List[int]
+        :rtype: bool
+    """
+    
+    i = 0
+    while i < len(bits):
+        if i == len(bits)-1:
+            return True
+        if bits[i] == 0:
+            i += 1
+        else:
+            i += 2
+    return False
