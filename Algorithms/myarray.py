@@ -1601,3 +1601,55 @@ def nextGreatestLetter(self, letters, target):
         else:
             l   = mid + 1
     return letters[l % len(letters)]
+
+def smallestRangeI(self, nums, k):
+    """
+        908. Smallest Range I
+        Easy
+        You are given an integer array nums and an integer k.
+
+        In one operation, you can choose any index i where 0 <= i < nums.length and change nums[i] to nums[i] + x 
+        where x is an integer from the range [-k, k]. You can apply this operation at most once for each index i.
+
+        The score of nums is the difference between the maximum and minimum elements in nums.
+
+        Return the minimum score of nums after applying the mentioned operation at most once for each index in it.
+        :type nums: List[int]
+        :type k: int
+        :rtype: int
+    """
+    minval      = sys.maxsize
+    maxval      = - sys.maxsize
+    for elem in nums:
+        minval  = min( minval, elem )
+        maxval  = max( maxval, elem )
+        
+    if minval + k >= maxval - k:
+        return 0
+    else:
+        return ( maxval - k ) - ( minval + k )
+
+def smallestRangeII(self, nums, k):
+    """
+    910. Smallest Range II
+    Medium
+    You are given an integer array nums and an integer k.
+
+    For each index i where 0 <= i < nums.length, change nums[i] to be either nums[i] + k or nums[i] - k.
+
+    The score of nums is the difference between the maximum and minimum elements in nums.
+
+    Return the minimum score of nums after changing the values at each index.
+    :type nums: List[int]
+    :type k: int
+    :rtype: int
+    """
+    n       = len(nums)
+    nums    = sorted(nums)
+    res     = nums[-1] - nums[0]
+    for i in range(1, n):
+        minval  = min( nums[0]+k, nums[i] - k )
+        maxval  = max( nums[-1]-k, nums[i-1] + k )
+        res     = min( res, maxval - minval )
+    return res
+
