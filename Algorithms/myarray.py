@@ -1653,3 +1653,38 @@ def smallestRangeII(self, nums, k):
         res     = min( res, maxval - minval )
     return res
 
+def hasGroupsSizeX(self, deck):
+    """
+    914. X of a Kind in a Deck of Cards
+    Easy
+    In a deck of cards, each card has an integer written on it.
+    Return true if and only if you can choose X >= 2 such that it is possible to split the entire deck 
+    into 1 or more groups of cards, where:
+
+    Each group has exactly X cards.
+    All the cards in each group have the same integer.        
+
+    :type deck: List[int]
+    :rtype: bool
+    """
+    def gcd( a, b ):
+        while b:
+            a, b    = b, a % b
+        return a
+        
+    def GCD( nums ):
+        res = nums[0]
+        for i in range(1, len(nums)):
+            res = gcd( res, nums[i])
+        return res
+        
+        
+    d           = {}
+    for c in deck:
+        d[c]    = d.get( c, 0 ) + 1
+    values      = list( d.values() )        
+    r           = GCD( values )
+    if r == 1:
+        return False
+    else:
+        return True
