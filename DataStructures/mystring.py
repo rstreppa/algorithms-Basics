@@ -120,3 +120,81 @@ def numberOfLines(self, widths, s):
             lines += 1
             total = widths[ord(c) - ord('a')]
     return [lines, total]            
+
+
+def isKPalindrome( s, k ):
+    """
+        Write an efficient algorithm to check if a given string is k–palindrome or not. 
+        A string is k–palindrome if it becomes a palindrome on removing at most k characters from it.
+        
+        Recursive solution
+        The worst-case time complexity of the above solution is O(2^n), where n is the length of the input string. 
+        The worst case happens when the string contains all different characters. 
+        It also requires additional space for the call stack.        
+    """
+    # Function to check how many characters to delete to turn strings X and Y equal
+    def helper(X, m, Y, n):
+
+        # if either string is empty, remove all characters from the other string
+        if m == 0 or n == 0:
+            return n + m
+
+        # ignore the last characters of both strings if they are the same
+        # and recur for the remaining characters
+        if X[m - 1] == Y[n - 1]:
+            return helper(X, m - 1, Y, n - 1)
+
+        # if the last character of both strings is different
+
+        # remove the last character from the first string and recur
+        x = helper(X, m - 1, Y, n)
+
+        # remove the last character from the second string and recur
+        y = helper(X, m, Y, n - 1)
+
+        # return one more than the minimum of the above two operations
+        return 1 + min(x, y)    
+    
+    # get reverse of X
+    rev = s[::-1]
+    return isKPalindrome( s, len(s), rev, len(s) ) <= 2*k
+
+# Function to check if the given string is k–palindrome or not
+def isKPalindrome(X, K):
+    """
+        Write an efficient algorithm to check if a given string is k–palindrome or not. 
+        A string is k–palindrome if it becomes a palindrome on removing at most k characters from it.
+        
+        Dymnamic Programming solution 
+        The problem has an optimal substructure and exhibits overlapping subproblems. 
+        Since both dynamic programming properties are satisfied, we can save subproblem solutions in memory rather than computing them repeatedly. 
+        The dynamic programming is demonstrated below in C++, Java, and Python, which runs in O(n^2) time:        
+    """
+ 
+    # 'Y' is a reverse of 'X'
+    Y = X[::-1]
+ 
+    n = len(X)
+ 
+    # lookup table to store solution of already computed subproblems
+    T = [[0 for x in range(n + 1)] for y in range((n + 1))]
+ 
+    # fill the lookup table `T[][]` in a bottom-up manner
+    for i in range(n + 1):
+        for j in range(n + 1):
+            # if either string is empty, remove all characters from the
+            # other string
+            if i == 0 or j == 0:
+                T[i][j] = i + j
+ 
+            # ignore the last characters of both strings if they are the same
+            # and process the remaining characters
+            elif X[i - 1] == Y[j - 1]:
+                T[i][j] = T[i - 1][j - 1]
+ 
+            # if the last character of both strings is different, consider
+            # minimum by removing the last character from 'X' and 'Y'
+            else:
+                T[i][j] = 1 + min(T[i - 1][j], T[i][j - 1])
+ 
+    return T[n][n] <= 2*k
