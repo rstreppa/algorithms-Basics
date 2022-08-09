@@ -1688,3 +1688,30 @@ def hasGroupsSizeX(self, deck):
         return False
     else:
         return True
+
+def diStringMatch(self, s):
+    """
+        942. DI String Match
+        Easy
+        A permutation perm of n + 1 integers of all the integers in the range [0, n] can be represented as a string s of length n where:
+
+        s[i] == 'I' if perm[i] < perm[i + 1], and
+        s[i] == 'D' if perm[i] > perm[i + 1].
+        Given a string s, reconstruct the permutation perm and return it. If there are multiple valid permutations perm, return any of them.
+        :type s: str
+        :rtype: List[int]
+    """
+    res         = []
+    mini        = 0
+    maxi        = len(s)
+
+    for c in s:
+        if c == 'I':
+            res.append(mini)
+            mini += 1
+        else:
+            res.append(maxi)
+            maxi -= 1
+    res.append(mini)
+
+    return ans
