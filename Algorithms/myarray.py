@@ -1783,3 +1783,43 @@ def minDeletionSize(self, strs):
         if list(i) !=sorted(i):
             res += 1
     return res
+
+def minDeletionSize(self, strs):
+    """
+        955. Delete Columns to Make Sorted II
+        Medium
+        You are given an array of n strings strs, all of the same length.
+        We may choose any deletion indices, and we delete all the characters in those indices for each string.
+        For example, if we have strs = ["abcdef","uvwxyz"] and deletion indices {0, 2, 3}, then the final array after deletions is ["bef", "vyz"].
+        Suppose we chose a set of deletion indices answer such that after deletions, the final array has its elements in lexicographic order 
+        (i.e., strs[0] <= strs[1] <= strs[2] <= ... <= strs[n - 1]). Return the minimum possible value of answer.length.
+                    
+        0(N*M)
+        Three-step to take care of:
+
+        If same char of  (previous string (i-1) == current string( i) ) or all removed index of string store them in a hash table so do nothing 
+        as they are lexicographic maintain.
+
+        previous  string (i-1) > current string( i) , lexicographic greater than current string , remove that index.
+
+        By removing that index the all the strings can change in lexicographic order, then do start with the first string again.                        
+  
+        
+        :type strs: List[str]
+        :rtype: int
+    """
+    
+    visited         = set()
+    n               = len( strs )
+    if n == 0:      return 0
+    m               = len( strs[0] )
+    
+    for i in range(1, n):
+        for j in range(m):
+            if j in visited or strs[i-1][j] == strs[i][j]:
+                continue
+            if strs[i-1][j] > strs[i][j]:
+                visited.add(j)
+                i   = 0
+            break
+    return len(visited)
