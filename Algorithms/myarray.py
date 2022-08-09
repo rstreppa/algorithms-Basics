@@ -1861,3 +1861,88 @@ def deckRevealedIncreasing(self, deck):
             #now insert the next element from the deck
             res.insert( 0, elem )
     return res           
+
+def maxWidthRamp(self, nums):
+    """
+    962. Maximum Width Ramp
+    Medium
+    A ramp in an integer array nums is a pair (i, j) for which i < j and nums[i] <= nums[j]. The width of such a ramp is j - i.
+
+    Brute force
+
+    Given an integer array nums, return the maximum width of a ramp in nums. If there is no ramp in nums, return 0.
+    :type nums: List[int]
+    :rtype: int
+    """
+    n       = len(nums)
+    res     = 0
+    
+    for r in range(n):
+        for l in range(r):
+            if nums[r] >= nums[l]:
+                res = max( res, r-l )
+                
+    return res
+
+def maxWidthRamp(self, nums):
+    """
+    962. Maximum Width Ramp
+    Medium
+    A ramp in an integer array nums is a pair (i, j) for which i < j and nums[i] <= nums[j]. The width of such a ramp is j - i.
+
+    //------ Solution 2 sort and solve ---------//
+    // 1. sort on value
+    // 2. sort on index <-- used in this problem Time=O(NlgN), Space=O(N)
+
+    Given an integer array nums, return the maximum width of a ramp in nums. If there is no ramp in nums, return 0.
+    :type nums: List[int]
+    :rtype: int
+    """
+    n           = len(nums)
+    res         = 0
+    indices     = sorted( list( range(n) ), key = lambda i: nums[i] )
+    minIdx      = indices[0]
+    for idx in indices:
+        res     = max( res, idx - minIdx )
+        minIdx  = min( minIdx, idx ) 
+    return res
+
+def maxWidthRamp(self, nums):
+    """
+    962. Maximum Width Ramp
+    Medium
+    A ramp in an integer array nums is a pair (i, j) for which i < j and nums[i] <= nums[j]. The width of such a ramp is j - i.
+    Given an integer array nums, return the maximum width of a ramp in nums. If there is no ramp in nums, return 0.
+
+    //------ Solution 3 stack ---------//
+    // Stack is often used for problems like
+    // find nearest larger/smaller elem (like water container problem)
+    // here it's to find furthest larger/smaller elem (a bit harder than water container problme)
+    // Time=O(N) Space=O(N)
+    
+    1)  scanning from left to right to get all possible indices of the min element seen so far
+        think a bit and you'll discover they are valid START INDICES candidates for the widest ramp
+    2)  now scanning backwards for all other non-min elements, let them pair with all the candidates
+        we've collected in the first step in stack. Meanwhile, if we've discover that the current index i could
+        form a ramp with a min idx j, we know j couldn't form a better solution since i is going backwards
+        so we pop j out of stack
+
+    :type nums: List[int]
+    :rtype: int
+    """
+    n           = len(nums)
+    res         = 0
+    s           = []
+    
+    # 1)
+    for i in range(n):
+        if not s or nums[i] < nums[s[-1]]:
+            s.append(i)
+    
+    # 2)
+    for i in range(n-1, -1, -1):
+        while s and nums[s[-1]] <= nums[i]:
+            res = max( res, i-s[-1] )
+            s.pop()
+    
+    return res
