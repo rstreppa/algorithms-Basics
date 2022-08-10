@@ -2053,3 +2053,49 @@ def removeCoveredIntervals(self, intervals):
         
     return len(res)
 
+def find132pattern(self, nums):
+    """
+    456. 132 Pattern
+    Medium
+    Given an array of n integers nums, a 132 pattern is a subsequence of three integers 
+    nums[i], nums[j] and nums[k] such that i < j < k and nums[i] < nums[k] < nums[j].
+    Return true if there is a 132 pattern in nums, otherwise, return false.
+        
+    Brute force can be optimized with a stack
+    maintained always in decreasing order (monotonic)
+        
+    Add to the monotonic stack if in decreasing order or less than two elements
+        
+    ex: [3,1,4,2]
+    add 3 to the stack
+    add 1 to the stack
+    when it comes to 4, previous values are useless, pop them
+    then add 2 
+        
+    Remember to keep a running minimum
+    every time you add a maximum value (j index) also get what was the minimum (i index candidate)
+        
+    even though we removed values form the stack we didn't lose the minimum, which we kept in a var
+        
+    O(2n) add all values at most pop all values at most
+        
+        
+    :type nums: List[int]
+    :rtype: bool
+    """
+        
+    s       = []    # pair (num, minLeft) monotonically decreasing
+    currMin = nums[0]
+        
+    for num in nums[1:]:
+        while s and num >= s[-1][0]:
+            s.pop()
+            # after you pop all elements >= there are two possibilities: stack empty or not
+            # if not empty automatically num < s[-1][0] 
+            # now you want to check if num < top of the stack but GREATER than currMin
+        if s and num > s[-1][1]:
+            return True # found triplet 132
+        s.append( [num, currMin] )
+        currMin = min( currMin, num)
+        
+    return False
