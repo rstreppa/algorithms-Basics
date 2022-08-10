@@ -424,24 +424,25 @@ def twoSum(nums, target):
             d[n] = i
 
 def sortedSquares(nums):
-    ''' Given an integer array nums sorted in non-decreasing order, 
+    ''' 
+        977. Squares of a Sorted Array
+        Given an integer array nums sorted in non-decreasing order, 
         return an array of the squares of each number sorted in non-decreasing order. 
         Squaring each element and sorting the new array is very trivial, 
         could you find an O(n) solution using a different approach?
     '''
-    answer  = [0] * len(nums)
+    n       = len(nums)
     l       = 0
-    r       = len(nums) - 1
+    r       = n-1
+    res     = []
     while l <= r:
-        left, right = abs(nums[l]), abs(nums[r])
-        if left > right:
-            answer[r - l] = left * left
-            l += 1
+        if abs(nums[l]) > abs(nums[r]):
+            res.append(nums[l]**2)
+            l   += 1
         else:
-            answer[r - l] = right * right
-            r -= 1
-    return answer
-
+            res.append(nums[r]**2)
+            r   -= 1
+    return res[::-1]
 
 
 def backspaceCompare(s, t):
