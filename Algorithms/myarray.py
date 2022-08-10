@@ -2017,3 +2017,39 @@ def subarraySum(self, nums, k):
         d[runningSum]   = d.get(runningSum, 0) + 1
         
     return res
+
+def removeCoveredIntervals(self, intervals):
+    """
+        1288. Remove Covered Intervals
+        Medium
+        Given an array intervals where intervals[i] = [li, ri] represent the interval [li, ri),
+        remove all intervals that are covered by another interval in the list.
+        The interval [a, b) is covered by the interval [c, d) if and only if c <= a and b <= d.
+        Return the number of remaining intervals.
+            
+        Brute Force O(n^2)
+        Optmized solution O(n logn) becasue you sort
+            
+            
+        :type intervals: List[List[int]]
+        :rtype: int
+    """
+    # sort the intervals to account for covering: sort first by leftmost starting point
+    # and then by rightmost ending point, so sort ascending and descending
+    intervals.sort( key = lambda x: ( x[0], -x[1] ) )
+        
+    # the first interval won't be covered by anything, so it goes anyway
+        
+    res                 = [ intervals[0] ]
+    for l, r in intervals[1:]:
+        # you want to compare current interval with the immediately previous to see if covered
+        prevL, prevR    = res[-1]
+            
+        # is it covered by the previous?
+        if prevL <= l and prevR >= r:
+            continue
+            
+        res.append([l, r])
+        
+    return len(res)
+
