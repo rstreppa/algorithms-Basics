@@ -526,4 +526,57 @@ def longestPalindrome2(st):
     return maxLength # return length of LPS
  
 	
+def mincostTickets(self, days, costs):
+    """
+    983. Minimum Cost For Tickets
+    Medium
+    You have planned some train traveling one year in advance. 
+    The days of the year in which you will travel are given as an integer array days. 
+    Each day is an integer from 1 to 365.
+    Train tickets are sold in three different ways:
+    a 1-day pass is sold for costs[0] dollars,
+    a 7-day pass is sold for costs[1] dollars, and
+    a 30-day pass is sold for costs[2] dollars.
+    The passes allow that many days of consecutive travel.
+
+    For example, if we get a 7-day pass on day 2, then we can travel for 7 days: 
+    2, 3, 4, 5, 6, 7, and 8.
+    Return the minimum number of dollars you need to travel every day in the given list of days.
+        
+    Dynamic Programming 
+    watch neetcode video
+    https://www.youtube.com/watch?v=4pY1bsBpIY4
+    it also has bottom-up, very similar
+        
+        
+    How to solve dyn programming problems:
+    - create decision trees and solve via brute force
+    - optimize brute force and get to dp
+        
+    :type days: List[int]
+    :type costs: List[int]
+    :rtype: int
+    """
+        
+    lookup      = {}    # first thing to do is the cache
+        
+    def dfs(i):     # backtracking dfs only needs the index of the array i
+                    # base case: what if we go out of bounds
+        if i == len(days):
+            return 0            # after last day no cost
+        if i in lookup:
+            return lookup[i]    # we don't want to recompute over and over again
+                
+        lookup[i]   = float('inf')  # next thing initialize to default value, inf since you want a min
+        for d, c in zip( [1, 7, 30], costs ):
+            # first guess: we obviously want a min: dp[i] = min( dp[i], c + dfs(i+d) )
+            # also we pass indices, not values to dfs, so we need another pointer j
+            j       = i
+            while j < len(days) and days[j] < days[i] + d:
+                j   += 1
+            lookup[i] = min( lookup[i], c + dfs(j) )
+            
+        return lookup[i]
+        
+    return dfs(0)
 	
