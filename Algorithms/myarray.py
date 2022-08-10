@@ -1990,3 +1990,30 @@ def subarraysDivByK(self, nums, k):
         res     += (v-1)*v // 2
     
     return res
+
+def subarraySum(self, nums, k):
+    """
+    560. Subarray Sum Equals K
+    Medium
+    Given an array of integers nums and an integer k, return the total number of subarrays whose sum equals to k.
+    A subarray is a contiguous non-empty sequence of elements within an array.
+    
+    variation of the preceding problem
+    see neetcode https://www.google.com/search?q=560.+Subarray+Sum+Equals+K+leetcode+solution+python&rlz=1C1CHBF_enUS894US894&oq=560.+Subarray+Sum+Equals+K+leetcode+solution+python&aqs=chrome..69i57.6947j0j7&sourceid=chrome&ie=UTF-8#kpvalbx=_dR3zYpDSD5SkiLMP97SXsAQ17
+     
+    :type nums: List[int]
+    :type k: int
+    :rtype: int
+    """
+
+    res                 = 0
+    runningSum          = 0
+    d                   = {0: 1} # prefix sum, there is always a value 0 before the array with count 1 
+    
+    for num in nums:
+        runningSum      += num
+        key             = runningSum - k
+        res             += d.get(key, 0)
+        d[runningSum]   = d.get(runningSum, 0) + 1
+        
+    return res
