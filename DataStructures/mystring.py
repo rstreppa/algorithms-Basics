@@ -198,3 +198,38 @@ def isKPalindrome(X, K):
                 T[i][j] = 1 + min(T[i - 1][j], T[i][j - 1])
  
     return T[n][n] <= 2*k
+
+def removeKdigits(self, num, k):
+    """
+    402. Remove K Digits
+    Medium
+    Share
+    Given string num representing a non-negative integer num, and an integer k, 
+    return the smallest possible integer after removing k digits from num.
+        
+    Monotonic Stack: you want to put numbers keeping them increasing and finally remove 
+    from the right the larger ones
+    You want to be as greedy as you can
+        
+    O(n) O(n)
+        
+    Actually best example to explain a monotonic stack
+        
+    watch this neecode video
+    https://www.youtube.com/watch?v=cFabMOnJaq0
+        
+    :type num: str
+    :type k: int
+    :rtype: str
+    """
+        
+    s       = []
+    for c in num:
+        while k > 0 and s and s[-1] > c: # keep the monotonic stack
+            k   -= 1
+            s.pop()
+        s.append(c)
+        
+    s       = s[ :len(s)-k ]    # left over chars to be removed from the bottom
+    res     = "".join(s)
+    return str(int(res)) if res else "0"    # handle leading zeros or empty string 
