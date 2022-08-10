@@ -87,55 +87,36 @@ def longestIncreasingSubsequence_divideConquer( a, n ):
 
     return pt+1
 
-def longestIncreasingSubsequence_dynProg( a, n ):
-    ''' We can use dynamic programming to solve this problem. 
-        Algo:
-            https://www.codesdope.com/blog/article/longest-increasing-subsequence/
-    '''
-    lis = []
 
-    parent = []
+def lengthOfLIS(self, nums):
+    """
+    300. Longest Increasing Subsequence
+    Medium
+    Given an integer array nums, return the length of the longest 
+    strictly increasing subsequence.
 
-    # initialize lis with 1 as each element
-    # has a subsequence length equal to 1
-    for i in range(n):
-        lis.append(1)
-    # initialize parent with -1
-    for i in range(n):
-        parent.append(-1)
+    A subsequence is a sequence that can be derived from an array by deleting some 
+    or no elements without changing the order of the remaining elements. 
+    For example, [3,6,2,7] is a subsequence of the array [0,3,1,6,2,2,7].        
+        
+    Watch this video https://www.youtube.com/watch?v=cjWnW0hdF1Y
+    Exploit brute force
+    It is natural to start from the end as there are no values/indices after
+    for each index backwards you will check all indices after, so O(n^2) 
+        
+    :type nums: List[int]
+    :rtype: int
+    """
+    n           = len(nums)
+    dp          = [1] * n
+        
+    for i in range( n-1, -1, -1 ):
+        for j in range( i+1, n ):
+            if nums[i] < nums[j]:
+                dp[i]   = max( dp[i], 1 + dp[j] )
+                    
+    return max( dp )
 
-    for i in range(n):
-        for j in range(i):
-
-            if a[j] < a[i]:
-                if lis[i] < lis[j] + 1:
-                    lis[i] = lis[j] + 1
-                    parent[i] = j
-
-    length = 0
-    pos = 0
-
-    # length of subsequence is the maximum value
-    # in lis array
-    for i in range(n):
-        if length < lis[i]:
-            length = lis[i]
-            pos = i
-
-    print("Length of the longest increasing subsequence ", length)
-
-    # restoring the sequence
-    # for storing longest increasing subsequence
-    sequence = []
-
-    while pos != -1:
-        sequence.append(a[pos])
-        pos = parent[pos]
-
-    sequence.reverse()
-
-    for i in range(length):
-        print(sequence[i])
 
 def maxProfit(prices):
    """      Say you have an array, A, for which the ith element is the price of a given stock on day i.
