@@ -1946,3 +1946,47 @@ def maxWidthRamp(self, nums):
             s.pop()
     
     return res
+
+def subarraysDivByK(self, nums, k):
+    """
+    974. Subarray Sums Divisible by K
+    Medium
+    Given an integer array nums and an integer k, return the number of non-empty subarrays that have a sum divisible by k.
+
+    easy once you unbderstand thatg yo keep a running sum modulo k and that two occurrencies of the same remainder mean one subarray whose sum is 
+    divisible by k.
+    So you keep a hash of all remainders
+    Edge case when a single element is divisible by k: initialize dict with 0 key equal to 1
+           
+    A subarray is a contiguous part of an array.
+    :type nums: List[int]
+    :type k: int
+    :rtype: int
+    """
+    
+    # res         = 0
+    # runningSum  = 0
+    # d           = { 0: 1 }
+    # for num in nums:
+    #     runningSum  += num
+    #     key         = runningSum % k
+    #     if key in d:
+    #         res     += d[key]
+    #         d[key]  += 1
+    #     else:
+    #         d[key]  = 1
+    # return res
+    
+    # my solution is more math oriented
+    res             = 0
+    runningSum      = 0
+    d               = { 0: 1 }
+    for num in nums:
+        runningSum  += num
+        key         = runningSum % k
+        d[key]      = d.get( key, 0 ) + 1
+        
+    for k, v in d.items():
+        res     += (v-1)*v // 2
+    
+    return res
