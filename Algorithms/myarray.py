@@ -1761,6 +1761,76 @@ def numIslands(self, grid):
                 res += 1
     return res
 
+
+def pacificAtlantic(self, heights):
+    """
+    417. Pacific Atlantic Water Flow
+    Medium
+    There is an m x n rectangular island that borders both the Pacific Ocean and Atlantic Ocean.
+    The Pacific Ocean touches the island's left and top edges, and the Atlantic Ocean touches 
+    the island's right and bottom edges.
+
+    The island is partitioned into a grid of square cells. You are given an m x n integer matrix
+    heights where heights[r][c] represents the height above sea level of the cell 
+    at coordinate (r, c).
+
+    The island receives a lot of rain, and the rain water can flow to neighboring cells directly
+    north, south, east, and west if the neighboring cell's height is less than or equal to the
+    current cell's height. Water can flow from any cell adjacent to an ocean into the ocean.
+
+    Return a 2D list of grid coordinates result where result[i] = [ri, ci] denotes that rain water
+    can flow from cell (ri, ci) to both the Pacific and Atlantic oceans.
+        
+    Brute force: dfs or bfs for every single point O((n*m)^2) 
+    From the brute force: maybe I can cut out the repeated work
+        
+    What about the opposite: start from the pacific ocean and see what can reach it
+    It's a graph traversal strtin from each position adjacent to ocean
+    This is O(n*m)
+    Going in the opposite diurection you need to be increasing obviously
+    Start from the first row (pacific) and run a dfs, same from last row (atlantic)
+    Keep a visited set so as not to add duplicates
+        
+        
+    :type heights: List[List[int]]
+    :rtype: List[List[int]]
+    """
+    rows, cols      = len(heights), len(heights[0])
+    pac, atl        = set(), set()
+        
+    def dfs( r, c, visited, prevHeight ):
+        # if already visited or out of bounds or not increasing height we return
+        if (r,c) in visited or r < 0 or c < 0 or r == rows or c == cols or heights[r][c] < prevHeight:
+            return
+        # if we are not returning we are finding a new cell
+        visited.add( (r,c) )
+        dfs( r+1, c, visited, prevHeight )
+        dfs( r-1, c, visited, prevHeight )
+        dfs( r, c+1, visited, prevHeight )
+        dfs( r, c-1, visited, prevHeight )
+            
+        
+    for c in range(cols):   # first row: pacific
+        # heights[0][c] is the previous height to make sure we are increasing
+        dfs( 0, c, pac, heights[0][c] ) 
+        # last row atlantic
+        dfs( rows-1, c, atl, heights[rows-1][c]  ) 
+            
+    for r in range(rows):
+        dfs( r, 0, pac, heights[r][0] ) 
+        dfs( r, cols-1, atl, heights[r][cols-1] )
+            
+    res             = []    
+    for r in range(rows):
+        for c in range(cols):
+            if (r,c) in pac and (r,c) in atl:
+                res.append([r,c])
+        
+    return res
+
+
+
+
 def minDeletionSize(self, strs):
     """
     944. Delete Columns to Make Sorted
