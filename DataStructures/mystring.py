@@ -233,3 +233,28 @@ def removeKdigits(self, num, k):
     s       = s[ :len(s)-k ]    # left over chars to be removed from the bottom
     res     = "".join(s)
     return str(int(res)) if res else "0"    # handle leading zeros or empty string 
+
+
+def addToArrayForm(self, num, k):
+    """
+    989. Add to Array-Form of Integer
+    Easy
+    The array-form of an integer num is an array representing its digits in left to right order.
+
+    For example, for num = 1321, the array form is [1,3,2,1].
+    Given num, the array-form of an integer, and an integer k, return the array-form 
+    of the integer num + k.
+
+    Easy once you get you can exploit strings
+        
+    :type num: List[int]
+    :type k: int
+    :rtype: List[int]
+    """        
+    s           = "".join( str(i) for i in num )
+    add         = int(s) + k
+    arrStr      = str(add)
+    res         = []
+    for j in arrStr:
+        res.append( int(j) )
+    return res      
