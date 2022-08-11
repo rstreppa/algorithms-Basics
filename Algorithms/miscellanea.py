@@ -394,45 +394,60 @@ def majorityElement(A):
     
     return -1
 
-def canCompleteCircuit(  gas, cost ):
-    '''
-        Gas Station
-        Given two integer arrays A and B of size N.
-        There are N gas stations along a circular route, where the amount of gas at station i is A[i].
-        You have a car with an unlimited gas tank and it costs B[i] of gas to travel from station i 
-        to its next station (i+1). You begin the journey with an empty tank at one of the gas stations.
-        Return the minimum starting gas station’s index if you can travel around the circuit once, otherwise return -1.
-        You can only travel in one direction. i to i+1, i+2, … n-1, 0, 1, 2.. Completing the circuit means starting at i and 
-        ending up at i again.
+def canCompleteCircuit(self, gas, cost):
+    """
+    134. Gas Station
+    Medium
+    There are n gas stations along a circular route, where the amount of gas 
+    at the ith station is gas[i].
 
-        Observation 1: If car starts at A and can not reach B, then any stations between A and B can not reach B. 
-        (B is the first station that A can not reach.)
-        Proof by contradiction: suppose there exists a station C between A and B, 
-        that the car can reach B from C. This means the car can reach B with tank = 0 from C. 
-        However, because the car can reach C from A, meaning tank >= 0 at station C from A. 
-        Therefore, the car can reach B from A.
+    You have a car with an unlimited gas tank and it costs cost[i] of gas to travel 
+    from the ith station to its next (i + 1)th station. 
+    You begin the journey with an empty tank at one of the gas stations.
 
-        Observation 2: If the total number of gas is bigger than the total number of cost. 
-        There must be a solution.
-        Proof: If the gas is more than the cost in total, there must be some stations we have enough gas to go through them. 
-        Let’s say they are green stations. So the other stations are red. 
-        The adjacent stations with same color can be joined together as one. 
-        Then there must be a red station that can be joined into a precedent green station unless 
-        there isn’t any red station, because the total gas is more than the total cost. 
-        In other words, all of the stations will join into a green station at last.        
-    '''
-    start, tank, total = 0, 0, 0
-    for idx in range(len(cost)):
-        tank += gas[idx] - cost[idx]
-        if tank < 0:
-            start = idx + 1
-            total += tank
-            tank = 0
-
-    if total + tank < 0:
+    Given two integer arrays gas and cost, return the starting gas station's index 
+    if you can travel around the circuit once in the clockwise direction, otherwise return -1. 
+    If there exists a solution, it is guaranteed to be unique
+        
+    watch neetcode video
+    https://www.youtube.com/watch?v=lJwbPZGo05A
+        
+    Greedy algorithm O(n) time O(1) memory complexity 
+    1) create a diff array gas - cost to see what's going on: gas is good cost is bad.  
+        [-2,-2,-2,3,3] you clearly see that starting index must be 3 to do circuit
+    2) Brute force solution: try every position and try to make a circle O(n^2) 
+    3) sum(gas) >= sum(cost) else no solution (i.e. sum(diff) >= 0 )
+    4) we are going to keep track of single variable total = 0 (and of start position)
+    5) add diff[0] to total. If total ever becomes negative, we ran out of gas, meaning that that
+        starting position did not work
+    6) be greedy: try each position in turn if total is negative try next position and reset total to 0
+    7) when you hit 3 your total becomes positive, be greedy and continue
+    8) when you reach the end of the array do you have to wrap and restart? No, you don't!
+        Not super intutive: since sum(diff) >= 0 a solution is guaranteed to exist
+    9) greedy problems are tricky: you got to assume it works and see if it does
+    10) it has to be the first index that allows you nd the array (no matter how negative the preceding)
+        
+    :type gas: List[int]
+    :type cost: List[int]
+    :rtype: int
+    """
+        
+    if sum(gas) < sum(cost):
         return -1
-    else:
-        return start
+        
+    # now a solution certainly exists, you have to find it
+    total           = 0  
+    start           = 0
+        
+    for i in range(len(gas)):
+        total   += ( gas[i] - cost[i] )     # we are adding diff[i] to total
+        # if total ever becomes negative that position not goona work
+        # if total always stays positive that position is the (unique) solution
+        if total < 0:
+            total   = 0
+            start   = i+1
+        
+    return start
     
     
     def myPow(x, n):
