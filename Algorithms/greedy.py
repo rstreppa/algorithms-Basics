@@ -23,10 +23,35 @@ def largestSumAfterKNegations(A, K):
     return sum(A) - (remain%2)*min(A)*2   
 
 def twoCitySchedCost(costs):
-    ''' A company is planning to interview 2n people. 
-        Given the array costs where costs[i] = [aCosti, bCosti], 
-        the cost of flying the ith person to city a is aCosti, and the cost of flying the ith person to city b is bCosti.
-        Return the minimum cost to fly every person to a city such that exactly n people arrive in each city.
+    ''' 
+        1029. Two City Scheduling
+        Medium
+        A company is planning to interview 2n people. 
+        Given the array costs where costs[i] = [aCosti, bCosti], the cost of flying 
+        the ith person to city a is aCosti, and the cost of flying the ith person 
+        to city b is bCosti.
+
+        Return the minimum cost to fly every person to a city such that exactly n people 
+        arrive in each city.
+
+        Watch neetcode video
+        https://www.youtube.com/watch?v=d-B_gk_gJtQ
+
+        You could do it recursively, keeping 
+        dfs(i, aCount, bCount ) index, running count of A and B and optmize for minimum
+        caching with two variables dp[aCount][bCount] would lead to O(n^2) 
+
+        Better solution: Greedy
+
+        How can we quantify the importance of sending [aCost, bCost] to city A or city B?
+        Well, look at the cost difference
+        diff = bCost - aCost will tell you how more convenient is to send to A rather than B
+        sort the diff array and the first half you will send to city B
+
+        sorting O(n log n)
+
+        :type costs: List[List[int]]
+        :rtype: int
         
         This arrangement may not divide the candidates evenly. 
         The problem requires you to allocate candidates to each city evenly.
