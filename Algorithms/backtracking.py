@@ -9,10 +9,25 @@
 
 
 def exist(board, word):
-    ''' Given an m x n grid of characters board and a string word, return true if word exists in the grid.
+    ''' 
+        79. Word Search
+        Medium
+    
+    	Given an m x n grid of characters board and a string word, return true if word exists in the grid.
         The word can be constructed from letters of sequentially adjacent cells, 
         where adjacent cells are horizontally or vertically neighboring. 
         The same letter cell may not be used more than once.
+
+	Brute force solution: backtracking (recursive dfs)
+        O( n * m * dfs ) now O(dfs) = O(len(word)) because that's the char you go thorugh
+	therefore 
+	O( n * m * 4^len(word) )
+	
+        :type board: List[List[str]]
+        :type word: str
+        :rtype: bool
+	
+	
     '''
     if not board:
         return False
@@ -34,7 +49,7 @@ def dfs(board, i, j, word):
     # check whether can find "word" along one direction
     res = dfs(board, i+1, j, word[1:]) or dfs(board, i-1, j, word[1:]) \
     or dfs(board, i, j+1, word[1:]) or dfs(board, i, j-1, word[1:])
-    board[i][j] = tmp
+    board[i][j] = tmp # backtracking alternatively define a set() and add and then remove coordinates (i,j)
     return res   
   
 def letterCasePermutation(S):
