@@ -426,24 +426,24 @@ def findJudge(self, n, trust):
         :type trust: List[List[int]]
         :rtype: int
     """
-    d = {}
-    res = []
-    allelse = []
+    arr     = []
+    d       = {}
         
     for i in range(1, n+1):
-        d[i] = 0
-        
-    for edge in trust:
-        d[edge[0]] += 1
+        arr.append(i)
+        d[i] = []
             
-    for k, v in d.items():
-        if v == 0:
-            res.append(k)
-        if v == 1:
-            allelse.append(k)
-                
-    if len(res) == 1 and len(allelse) == n-1:
-        return res[0]
-    else:
+    for i in trust:
+        d[i[1]].append(i[0])
+        if i[0] in arr:
+            arr.remove(i[0])
+        
+    if len(arr)!=1:
         return -1
+        
+    for key, value in d.items():
+        if key==arr[0] and len(value)==n-1:
+            return key
+        
+    return -1        
 
