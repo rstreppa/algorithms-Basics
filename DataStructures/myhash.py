@@ -403,4 +403,47 @@ def countNicePairs(nums):
         
         d[looking_for] = d.get(looking_for, 0) + 1
     
-    return res %1000000007        
+    return res %1000000007     
+
+def findJudge(self, n, trust):
+    """
+        997. Find the Town Judge
+        Easy
+        In a town, there are n people labeled from 1 to n. 
+        There is a rumor that one of these people is secretly the town judge.
+
+        If the town judge exists, then:
+
+        The town judge trusts nobody.
+        Everybody (except for the town judge) trusts the town judge.
+        There is exactly one person that satisfies properties 1 and 2.
+        You are given an array trust where trust[i] = [ai, bi] representing that the person
+        labeled ai trusts the person labeled bi.
+
+        Return the label of the town judge if the town judge exists and can be identified, 
+        or return -1 otherwise.
+        :type n: int
+        :type trust: List[List[int]]
+        :rtype: int
+    """
+    d = {}
+    res = []
+    allelse = []
+        
+    for i in range(1, n+1):
+        d[i] = 0
+        
+    for edge in trust:
+        d[edge[0]] += 1
+            
+    for k, v in d.items():
+        if v == 0:
+            res.append(k)
+        if v == 1:
+            allelse.append(k)
+                
+    if len(res) == 1 and len(allelse) == n-1:
+        return res[0]
+    else:
+        return -1
+
