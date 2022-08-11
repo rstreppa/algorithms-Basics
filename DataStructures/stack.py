@@ -174,3 +174,39 @@ def isValid(self, s):
     else:
         return False
   
+def dailyTemperatures(self, temperatures):
+    """
+    739. Daily Temperatures
+    Medium
+    Given an array of integers temperatures represents the daily temperatures, return an array
+    answer such that answer[i] is the number of days you have to wait after the ith day to get a
+    warmer temperature. If there is no future day for which this is possible, 
+    keep answer[i] == 0 instead.
+        
+    Of course brute force approach would take O(n^2) time
+    Lesser time complexity if we use extra memory
+    [73, 74, 75, 71]
+    you have to remmeber the previous temperature: a list but stack is more intutitive
+    because if we keep track of the indices we don't need 73 any more and we can pop it
+        
+    so if it is increasing it's really easy you keep on putting 1s and popping from the stack
+    if it is decreasing you keep adding to the stack
+        
+    Monotonic stack decreasing order not strictly (allow equals) 
+    Beginner's friendly problem
+        
+    for the unpopped values the default is zero, for the popped it's the differnece in indices
+        
+    O(n) time O(n) memory
+    :type temperatures: List[int]
+    :rtype: List[int]
+    """
+        
+    res                         = [0] * len(temperatures)
+    stack                       = []    # pair [temperature, index]  
+    for i, t in enumerate(temperatures):
+        while stack and t > stack[-1][0]:
+            stackT, stackInd    = stack.pop()
+            res[stackInd]       = i - stackInd
+        stack.append( [t,i] )
+    return res
