@@ -753,3 +753,55 @@ def findRedundantConnection(self, edges):
         if not union( n1, n2 ):
             return [n1, n2]
 
+def valid_tree(self, n, edges):
+    """
+        178 · Graph Valid Tree
+        Algorithms
+        Medium
+        Given n nodes labeled from 0 to n - 1 and a list of undirected edges (each edge is a pair of nodes), 
+        write a function to check whether these edges make up a valid tree.
+
+        To have a valid tree: 
+            there must be no loops
+            all nodes have to be connected
+        create an adjacency list from the input
+        then traverse the graph and see if it's a valid tree
+
+        start at any node say always 0 (if empty graph it's a valid tree)
+        do a standard graph traversal: you can do BFS but let's do DFS
+        * if all visited nodes match the number of input nodes -> all connected
+        * if we don't reach a cycle then True else false
+        False positive of a loop since undirected graph 0 -> 1 from 1 -> 0
+        how to avoid? We are going to add previous node
+        If there is ANOTHER way to get back to 0 from 1 then it would be a loop
+        (easy to see if you visit a node already in visited)
+        When you reach the end of dfs -> base case -> return True
+        What previous give to node 0? Give a default -1
+
+        O(E+V) time O(E+V) memory 
+
+    """
+    # write your code here
+    if not n:
+        return True
+    adj         = { i : [] for i in range(n) }
+    for n1, n2 in edges:
+        adj[n1].append(n2)
+        adj[n2].append(n1)
+
+    visited     = set()
+    def dfs( i, prev ):
+        # base case: loop detected
+        if i in visited:
+            return False
+
+        visited.add(i)
+        # go through neighbors
+        for j in adj[i]:
+            if j == prev:
+                continue
+            if not dfs( j, i ): # loop detected
+                return False
+        return True             # no loop
+            
+    return dfs( 0, -1 ) and n == len(visited)
