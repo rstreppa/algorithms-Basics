@@ -438,3 +438,16 @@ def findJudge(self, n, trust):
             return i
     return -1
 
+def commonChars(self, words):
+    """
+        1002. Find Common Characters
+        Easy
+        Given a string array words, return an array of all characters that show up in all strings within the words
+        (including duplicates). You may return the answer in any order.        
+        :type words: List[str]
+        :rtype: List[str]
+    """
+    res         = Counter( words[0] )
+    for word in words:
+        res     &= Counter( word )
+    return list( res.elements() )        
