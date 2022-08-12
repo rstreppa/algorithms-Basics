@@ -347,3 +347,72 @@ def binaryTreePaths(self, root):
     stack = []
     backtrack( root, stack, res)
     return res
+
+def solveNQueens(self, n):
+    """
+        51. N-Queens
+        Hard
+        The n-queens puzzle is the problem of placing n queens on an n x n chessboard such that no two queens 
+        attack each other.
+        Given an integer n, return all distinct solutions to the n-queens puzzle. 
+        You may return the answer in any order.
+        Each solution contains a distinct board configuration of the n-queens' placement, where 'Q' and '.' 
+        both indicate a queen and an empty space, respectively.        
+
+        Famous backtracking problem, basically brute force approach 
+            
+        Every Q must be in a different row
+        Every Q in a different column
+        Hard part is diagonal: each Q is in a separate positive diag and negative diag
+            
+        Really brute force can be improved knowing each Q in a different row col
+        We are going to move to the next row anyway but we need to maintain the column
+        * keep track of col, positive diag and negative diag all of them will be a set
+        How can we do effectively on the diag? We don't have indices
+        r-c stays constant along major negative diag -3 -2 -1 0 1 2 3 
+        r+c stays constant along positive diag
+            
+        Once you keep track of col, pos diag, neg diag, you can brute force and start placing queens
+            
+        :type n: int
+        :rtype: List[List[str]]
+    """
+    col                 = set()
+    posDiag             = set()     # r+c
+    negDiag             = set()     # r-c
+        
+    res                 = []
+    # we are going to maintain a board
+    board               = [ [ "." ] * n for _ in range(n) ]
+        
+    # we will backtrack going row by row
+    def backtrack(r):
+        # base case, if we reach the n-th row we found a solution
+        if r == n:
+            # you need to take a copy of the board because of backtracking
+            copy        = [ "".join( row ) for row in board ]
+            res.append( copy )
+            return
+        # try every single position in current row
+        for c in range(n):
+            if c in col or r+c in posDiag or r-c in negDiag: # already been used
+                continue
+                    
+            # update the sets and the board itself
+            col.add(c)
+            posDiag.add(r+c)
+            negDiag.add(r-c)
+            board[r][c] = "Q"
+                
+            # do the backtracking recursive call
+            backtrack(r+1)
+                
+            # do the backtrack cleanup: undo the last additions
+            col.remove(c)
+            posDiag.remove(r+c)
+            negDiag.remove(r-c)
+            board[r][c] = "."
+                
+    backtrack(0)
+        
+    return res
