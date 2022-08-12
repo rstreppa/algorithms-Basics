@@ -223,6 +223,49 @@ def search(nums, target):
             right = middle - 1
     return -1
 
+def findMin(self, nums):
+    """
+    153. Find Minimum in Rotated Sorted Array
+    Medium
+    Suppose an array of length n sorted in ascending order is rotated between 1 and n times. For example, the array nums = [0,1,2,4,5,6,7] might become:
+
+    [4,5,6,7,0,1,2] if it was rotated 4 times.
+    [0,1,2,4,5,6,7] if it was rotated 7 times.
+    Notice that rotating an array [a[0], a[1], a[2], ..., a[n-1]] 1 time results in the array [a[n-1], a[0], a[1], a[2], ..., a[n-2]].
+    Given the sorted rotated array nums of unique elements, return the minimum element of this array.
+    You must write an algorithm that runs in O(log n) time.
+    
+    keywords sorted and O(log n) compels for a binary search, there's the twist of rotation
+    
+    find the pivot, find the element that breaks the order
+    assuming mid is the minimum, lhs and rhs should be (at least partially) sorted: should we search left or right?
+    when you rotate you put larger values on lhs
+    if nums[mid] >= nums[0] thenm mid is part of the left sorted portion, which means we want to search to the right (= is edge case when mid==0)
+    vice versa if nums[mid] <= nums[n-1], you want to search to the left
+    this works only if rotated: if we get to a complete4ly sorted polrtion, we just take the leftmost value
+    
+    if nums[left] < nums[right] the portion is already sorted, you just take the leftmost and you are done
+
+    :type nums: List[int]
+    :rtype: int
+    """
+    n               = len(nums)
+    res             = nums[0]   # you can pick anything as default, pick leftmost
+    l               = 0
+    r               = n-1
+    while l <= r:
+        if nums[l] < nums[r]:   # we are in a sorted portion, we take the leftmost
+            res     = min(res, nums[l])
+            break
+        mid         = (r-l)//2 + l
+        res         = min(res, nums[mid])
+        if nums[mid] >= nums[l]:    # we want to search to the right
+            l       = mid+1
+        else:
+            r       = mid-1
+    return res
+
+
 def searchRange(self, nums, target):
     """
         34. Find First and Last Position of Element in Sorted Array
