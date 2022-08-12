@@ -416,3 +416,47 @@ def solveNQueens(self, n):
     backtrack(0)
         
     return res
+
+def totalNQueens(self, n):
+    """
+        52. N-Queens II
+        Hard
+        The n-queens puzzle is the problem of placing n queens on an n x n chessboard such that no two queens 
+        attack each other.
+        Given an integer n, return the number of distinct solutions to the n-queens puzzle.
+            
+        Classical backtracking problem, see 51. N-Queens for all explanation  
+            
+        :type n: int
+        :rtype: int
+    """
+    col                 = set()
+    posDiag             = set()     # r+c
+    negDiag             = set()     # r-c
+        
+    res                 = 0
+    def backtrack(r):
+        # base case if we are out of bounds, we have placed n Queens
+        if r == n:
+            nonlocal res    # we are referring to an outer variable of the nested function
+            res         += 1
+            return
+            
+        # we haven't reached the end, we need to build as we go
+        for c in range(n):
+            if c in col or (r+c) in posDiag or (r-c) in negDiag:
+                continue
+                
+            col.add(c)
+            posDiag.add(r+c)
+            negDiag.add(r-c)
+                
+            backtrack(r+1)
+                    
+            col.remove(c)
+            posDiag.remove(r+c)
+            negDiag.remove(r-c)
+
+    backtrack(0)
+        
+    return res
