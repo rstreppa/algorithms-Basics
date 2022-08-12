@@ -75,7 +75,65 @@ def canAttendMeetings( intervals ):
         if new_intervals[i-1][1] > new_intervals[i][0]: # end of previous overlaps with stgrt of current 
             return False
     return True            
+
+def min_meeting_rooms(self, intervals: List[Interval]) -> int:
+    """
+        919 · Meeting Rooms II
+        Algorithms
+        Medium
+        Given an array of meeting time intervals consisting of start and end times [[s1,e1],[s2,e2],...] (si < ei), 
+        find the minimum number of conference rooms required.)
+            
+        Input: intervals = [(0,30),(5,10),(15,20)]
+        Output: 2
+        Explanation:
+        We need two meeting rooms
+        room1: (0,30)
+        room2: (5,10),(15,20)
+
+        in other words what's the max number of overlapping meetings at any point in time
+        We will need to sort the input array so O(n log n) time O(n) memory space
+
+        We will keep a variable count that keeps the number of meetings going on at any point in time
+
+        Draw segments: start 0 then you have a nother start at 5, not an end: count = 2
+        Next it's an end value at 10: count = 1
+        Next it'a start at 15: count = 2
+
+        When we have a tie: iterate through end meeting time before start meeting time (if one ends at 10 and another starts at 10 no overlap)
+            
+        put start times in a separate array sorted,  same with end times
+
+        two pointers: if start < end increment count and shift start pointer, count++
+        if another start before first end, then count++ and shift start pointer
+
+        Every shift of end pointer count--
+        Rememebr tie: move end before start if same value
+
+    """
+    # Write your code here
+    start           = sorted( [ i.start for i in intervals ] )
+    end             = sorted( [ i.end for i in intervals ] )
+
+    res             = 0
+    count           = 0
+    s               = 0     # two pointers
+    e               = 0     # two pointers
+
+    while s < len(intervals):
+        if start[s] < end[e]:
+            s       += 1
+            count   += 1
+        else:
+            e       += 1
+            count   -= 1
+        res         = max( res, count )
         
+    return res
+
+
+
+
 def search(nums, target):
     ''' Given an array of integers nums which is sorted in ascending order, and an integer target, 
         write a function to search target in nums. If target exists, then return its index. Otherwise, return -1.
