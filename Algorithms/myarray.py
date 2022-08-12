@@ -482,26 +482,29 @@ def numPairsDivisibleBy60(time):
     return count
 
 def canThreePartsEqualSum(arr):
-    ''' Given an array of integers arr, return true if we can partition the array 
+    ''' 
+    	1013. Partition Array Into Three Parts With Equal Sum
+	Easy
+    	Given an array of integers arr, return true if we can partition the array 
         into three non-empty parts with equal sums.
         Formally, we can partition the array if we can find indexes i + 1 < j 
         with (arr[0] + arr[1] + ... + arr[i] == arr[i + 1] + arr[i + 2] + ... + arr[j - 1] 
               == arr[j] + arr[j + 1] + ... + arr[arr.length - 1])
     '''
-    N       =len(arr)
-    third   =sum(arr)//3
-    if(third*3!=sum(arr)):
+    total       = sum(arr)
+    if total % 3 != 0:
         return False
-    running_sum     = 0
-    parts           = 0
-    for i in range(N):
-        running_sum+=arr[i]
-        if(running_sum==third):
-            running_sum=0
-            parts+=1
-    if(parts==3):
-        return True
-    return False
+    ave         = total // 3
+    stage       = 0
+    add         = 0
+    for i in arr[:-1]:
+        add     += i
+        if add == ave:
+            stage   +=1
+            add     = 0
+        if stage == 2:
+            return True
+    return False            
 
     # i   = 1
     # j   = len(arr) - 2
