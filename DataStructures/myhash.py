@@ -451,3 +451,38 @@ def commonChars(self, words):
     for word in words:
         res     &= Counter( word )
     return list( res.elements() )        
+
+def countCharacters(self, words, chars):
+    """
+        1160. Find Words That Can Be Formed by Characters
+        Easy
+        You are given an array of strings words and a string chars.
+        A string is good if it can be formed by characters from chars (each character can only be used once).
+        Return the sum of lengths of all good strings in words.        
+
+        :type words: List[str]
+        :type chars: str
+        :rtype: int
+    """
+    res             = 0
+    flag            = True
+
+    charDict        = Counter(chars)
+        
+    for word in words:
+        wordDict    = Counter(word)
+
+        for k , v in wordDict.items():
+            if k in charDict and v<= charDict[k]:
+                continue
+            else:
+                flag = False
+                break
+        
+        if flag:
+            res     += len(word)
+        else:
+            flag    = True
+    
+
+    return res        
