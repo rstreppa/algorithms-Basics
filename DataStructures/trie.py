@@ -69,7 +69,7 @@ def indexPairs2( text, words):
     '''
     trie    = TrieNode()
     for word in words:
-        insert(trie, word)
+        insert(trie, word)	# O(KL) K number of words, L max length of a word
     
     solutions = []
     def trie_search(i):
@@ -82,6 +82,6 @@ def indexPairs2( text, words):
                 solutions.append([i,j])
     
     for i in range(len(text)):
-        trie_search(i)
+        trie_search(i)		# O(NL) N length text, L max length of a word
         
     return solutions
