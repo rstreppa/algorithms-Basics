@@ -2230,3 +2230,40 @@ def find132pattern(self, nums):
         currMin = min( currMin, num)
         
     return False
+
+def arraysIntersection(self, arr1, arr2, arr3):
+    """
+	LeetCode 1213. Intersection of Three Sorted Arrays
+	Description
+	https://leetcode.com/problems/intersection-of-three-sorted-arrays/
+	Given three integer arrays arr1, arr2 and arr3 sorted in strictly increasing order, return a sorted array of only the integers 
+	that appeared in all three arrays.
+	
+	Very easy to do in O(n log n) but you can also do in O(n)
+    """
+    # O(n logn)
+    
+    #set1 = set(arr1)
+    #set2 = set(arr2)
+    #set3 = set(arr3)
+    #return sorted(set3.intersection(set1, set2))    
+    
+    # O(n)
+    res			= []
+    i 			= 0
+    j			= 0
+    k			= 0
+    while i < len(arr1) and j < len(arr2) and k < len(arr3):
+	if arr1[i] == arr2[j] and arr2[j] == arr3[k]:
+	    res.append( arr1[i] )
+	    i		+= 1
+	    j		+= 1
+	    k		+= 1
+	elif arr1[i] < arr2[j]:		# because strictly monotonic
+	    i		+= 1
+	elif arr2[j] < arr3[k]:
+	    j		+= 1
+	else:
+	    k		+= 1
+
+    return  res
