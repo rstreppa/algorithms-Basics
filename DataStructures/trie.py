@@ -46,7 +46,10 @@ def search(root, key):
     return pCrawl and pCrawl.isEndOfWord
 
 def indexPairs( text, words):
-    ''' Given a text string and a list of sdtrings words, return alll index pairs [i,j]
+    ''' 
+    	1065. Index Pairs of a String
+	Easy
+	Given a text string and a list of sdtrings words, return alll index pairs [i,j]
         so that substring text[i]...text[j] is in the list of words
     '''
     result = []
@@ -57,7 +60,10 @@ def indexPairs( text, words):
     return result
 
 def indexPairs2( text, words):
-    ''' Given a text string and a list of strings words, return alll index pairs [i,j]
+    ''' 
+    	1065. Index Pairs of a String
+	Easy
+    	Given a text string and a list of strings words, return alll index pairs [i,j]
         so that substring text[i]...text[j] is in the list of words
         Using TrieNode
     '''
