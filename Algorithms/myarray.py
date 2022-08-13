@@ -608,7 +608,8 @@ def heightChecker(heights):
     return count    
     
 def sumOfDigits(A):
-    ''' Given an array A of positive integers, let S be the sum of the digits of the minimal element of A.
+    ''' 
+	Given an array A of positive integers, let S be the sum of the digits of the minimal element of A.
         Return 0 if S is odd, otherwise return 1 
     '''
     minimal = min(A)
@@ -622,7 +623,10 @@ def sumOfDigits(A):
         return 0
         
 def duplicateZeros(arr):
-    ''' Given a fixed-length integer array arr, duplicate each occurrence of zero, shifting the remaining elements to the right.
+    ''' 
+     	1089. Duplicate Zeros
+	Easy   	
+	Given a fixed-length integer array arr, duplicate each occurrence of zero, shifting the remaining elements to the right.
         Note that elements beyond the length of the original array are not written. 
         Do the above modifications to the input array in place and do not return anything. 
     '''    
