@@ -2267,3 +2267,39 @@ def arraysIntersection(self, arr1, arr2, arr3):
 	    k		+= 1
 
     return  res
+
+def missingNumber(arr):
+   """
+	1228. Missing Number In Arithmetic Progression
+	In some array arr, the values were in arithmetic progression: the values arr[i+1] - arr[i] are all equal for every 0 <= i < arr.length - 1.
+	Then, a value from arr was removed that was not the first or last value in the array.
+	Return the removed value.   	
+	
+	A Simple Solution is to linearly traverse the array and find the missing number. Time complexity of this solution is O(n).
+	But we have a solution in O(1) using formulae for arithmetic progression
+	Sum of the n elements = (n/2)(a+l)
+	n is the number of elements, a is the first element and l is the last element
+   """
+
+   arr.sort()
+   diff		= (arr[-1] - arr[0]) / len(arr)
+   for i in range(len(arr)-1):
+   	if arr[i] + diff != arr[i+1]:
+            return arr[i] + diff
+   return arr[0]
+
+   # or O(1)
+   
+   first 	= arr[0]
+   last 	= arr[-1]
+      
+    # Explained above
+    if (first + last) % 2:
+        s = (n + 1) / 2
+        s *= (first + last)
+    else:
+        s = (first + last) / 2
+        s *= (n + 1)
+  
+    missing = s - sum(arr)
+    return missing
