@@ -147,3 +147,39 @@ def runningMedian(a):
         res.append(round(getMedian(lowers, highers),1))
     return res
 
+def maxNumberOfApples(self, arr):
+    """ 
+        1196. How Many Apples Can You Put into the Basket
+        You have some apples, where arr[i] is the weight of the i-th apple. You also have a basket that can carry up to 5000 units of weight.
+        Return the maximum number of apples you can put in the basket.
+        # sort
+        TC: O(nlogn) # becoz of sorting
+        SC: O(1)
+    """
+    arr.sort()
+    apples = units = 0
+    for _, weight in enumerate(arr):
+        units += weight
+        if units > 5000:
+            break
+        apples += 1
+    return apples
+  
+ def maxNumberOfApples2(self, arr):
+    """ 
+        1196. How Many Apples Can You Put into the Basket
+        You have some apples, where arr[i] is the weight of the i-th apple. You also have a basket that can carry up to 5000 units of weight.
+        Return the maximum number of apples you can put in the basket.
+        # min-heap
+        TC: O(N + k*log N ) # k is the number of apples would put in the basket
+        SC: O(1)    
+    """
+    heapq.heapify(arr)
+    apples = units = 0
+    # arr[0] always represents the smallest element in the min-heap
+    while arr and units + arr[0] <= 5000:
+        units += heapq.heappop(arr)
+        apples += 1
+    return apples
+ 
+    
