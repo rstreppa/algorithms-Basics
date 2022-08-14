@@ -331,3 +331,28 @@ def isMajorityElement( nums, target ):
         else:
             r = mid
     return l + n // 2 < n and nums[l + n // 2] == target
+
+def findSpecialInteger(self, arr):
+    """
+        1287. Element Appearing More Than 25% In Sorted Array
+        Easy
+        Given an integer array sorted in non-decreasing order, there is exactly one integer in the array that occurs more than 25% of the time, 
+        return that integer.
+        :type arr: List[int]
+        :rtype: int
+        
+        binary search fastest: find first and last occurrence
+        i       : start quarter position [n//4, n//2, 3n//4]
+        start   : first occurrence of arr[i]
+        end     : last occurrence of arr[i]
+        
+        end - start > n//4
+    """
+    n               = len(arr)
+    q               = n // 4
+    for i in (n//4, n//2, 3*n//4):
+        start       = bisect.bisect_left( arr, arr[i] ) # first occurrence
+        end         = bisect.bisect( arr, arr[i] )      # last occurrence
+        if end - start > n // 4:
+            return arr[i]
+    return arr[0]
