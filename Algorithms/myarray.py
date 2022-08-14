@@ -698,43 +698,39 @@ def allCellsDistOrder(rows, cols, rCenter, cCenter):
     res = [ e[1] for e in result ]        
     return res
 
-def diagonalSort(mat):
-    ''' 1329. Sort the Matrix Diagonally
-        A matrix diagonal is a diagonal line of cells starting from some cell in either the topmost row 
-        or leftmost column and going in the bottom-right direction until reaching the matrix's end. 
-        For example, the matrix diagonal starting from mat[2][0], where mat is a 6 x 3 matrix, 
+def diagonalSort(self, mat):
+    """
+        1329. Sort the Matrix Diagonally
+        Medium
+        A matrix diagonal is a diagonal line of cells starting from some cell in either the topmost row or leftmost column and going in the bottom-right direction 
+        until reaching the matrix's end. For example, the matrix diagonal starting from mat[2][0], where mat is a 6 x 3 matrix, 
         includes cells mat[2][0], mat[3][1], and mat[4][2].
-
         Given an m x n matrix mat of integers, sort each matrix diagonal in ascending order and return the resulting matrix.
-    '''
-    def pickDiagonals(row,col,mat,R,C):
-        diagonal=[]
-        while(row<R and col<C):
-            diagonal.append(mat[row][col])
-            row+=1
-            col+=1
-        return diagonal
+        
+        
+        remember that r-c is constant along a lower diagonal 
+        use a dict to index the lower diag
+        then pop form the queue
+        
+        :type mat: List[List[int]]
+        :rtype: List[List[int]]
+    """
+    
+    temp                = []
+    mapped              = defaultdict(list)
+    
+    for i in range(len(mat)):
+        for j in range(len(mat[0])):
+            mapped[i-j].append(mat[i][j])
+    for key, val in mapped.items():
+        mapped[key]     = sorted(val)
+    
+    for i in range(len(mat)):
+        for j in range(len(mat[0])):
+            mat[i][j]   = mapped[i-j][0]
+            mapped[i-j].pop(0)
+    return mat        
 
-    def arrangeDiagonal(row,col,diagonal,mat,R,C):
-        while(row<R and col<C):
-            mat[row][col]=diagonal.pop(0)
-            row+=1
-            col+=1
-
-    R=len(mat)
-    C=len(mat[0])
-
-    for row in range(R-2,-1,-1):
-        diagonal=pickDiagonals(row,0,mat,R,C)
-        diagonal.sort()
-        arrangeDiagonal(row,0,diagonal,mat,R,C)
-
-    for col in range(1,C-1):
-        diagonal=pickDiagonals(0,col,mat,R,C)
-        diagonal.sort()
-        arrangeDiagonal(0,col,diagonal,mat,R,C)
-
-    return mat    
 
 def maxScoreIndices(nums):
 
