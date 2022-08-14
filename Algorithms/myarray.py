@@ -2307,3 +2307,28 @@ def missingNumber(arr):
   
     missing = s - sum(arr)
     return missing
+
+def transformArray(self, arr):
+    """
+	1243. Array Transformation
+	Easy
+	Given an initial array arr, every day you produce a new array using the array of the previous day.
+	On the i-th day, you do the following operations on the array of day i-1 to produce the array of day i:
+	If an element is smaller than both its left neighbor and its right neighbor, then this element is incremented.
+	If an element is bigger than both its left neighbor and its right neighbor, then this element is decremented.
+	The first and last elements never change.
+	After some days, the array does not change. Return that final array.
+	O(n) time O(n) memory
+    """
+    n			= len(arr)
+    copy		= []
+    while copy != arr:
+	copy		= arr
+	for i in range(1, n-1):
+	    if copy[i] < copy[i-1] and copy[i] < copy[i+1]:
+		arr[i]	+= 1
+	    elif copy[i] > copy[i-1] and copy[i] > copy[i+1]:
+		arr[i]	-= 1
+    return arr
+
+
