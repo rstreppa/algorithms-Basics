@@ -32,6 +32,7 @@ def findDisappearedNumbers(nums):
     '''
     return list( set(range(1, len(nums)+1)).difference(set(nums)) )
 
+
 def singleNumber(nums):
     ''' Given a non-empty array of integers nums, every element appears twice except for one. 
         Find that single one.
@@ -2365,3 +2366,33 @@ def longestWPI(self, hours):
             res             = max( res, length-hmap[prefixSum-1] )
     return res 
 
+def replaceElements(self, arr):
+    """
+        1299. Replace Elements with Greatest Element on Right Side
+        Easy
+        Given an array arr, replace every element in that array with the greatest element among the elements to its right, and replace the last element with -1.
+
+        Brute force solution  in O(n^2)
+        You can do bettger once you realize 
+        newValue[0]     = max( arr[1:5] )
+        equivalent to
+        newValue[0]     = max( arr[1], newValue[1] )
+        
+        so if you work backwards you cut down all repeated work and bring it down to O(n)
+        So compute the new values in reverse order
+
+        After doing so, return the array.
+        :type arr: List[int]
+        :rtype: List[int]
+    """
+    
+    # initial max   = -1
+    # reverse iteration
+    # newmax        = max( oldmax, arr[i] )
+    maxval          = -1
+    for i in range( len(arr)-1, -1, -1 ):
+        newmax      = max( maxval, arr[i] )     # update the new max
+        arr[i]      = maxval                    # replace in place the arr value with the maxval
+        maxval      = newmax                    # update the new maxval
+        
+    return arr
