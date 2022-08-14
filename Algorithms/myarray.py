@@ -2331,4 +2331,37 @@ def transformArray(self, arr):
 		arr[i]	-= 1
     return arr
 
+def longestWPI(self, hours):
+    """
+        1124. Longest Well-Performing Interval
+        Medium
+        We are given hours, a list of the number of hours worked per day for a given employee.
+        A day is considered to be a tiring day if and only if the number of hours worked is (strictly) greater than 8.
+        A well-performing interval is an interval of days for which the number of tiring days is strictly larger than the number of non-tiring days.
+
+        O(n) time O(n) space
+        This problem can be reduced to find the longest subarray with sum of 1, or the longest subarray starting from left-most that has a sum greater than 0.
+
+        Start doing prefixSum by doing +1 for tired days and -1 for non-tired days and at each i check if prefixSum>0,
+        then we can take ans=max(ans,i+1). Second Case prefixSum<=0 , 
+        in this we need to find prefixSum-1 at smallest index to get maximum length.
+        Time complexity: O(n)
+        Space complexity: O(n)
+        
+        Return the length of the longest well-performing interval.
+        :type hours: List[int]
+        :rtype: int
+    """
+    prefixSum               = 0
+    hmap                    = defaultdict(int)
+    res                     = 0
+    for length, hour in enumerate(hours):
+        prefixSum           +=  1 if hour>8 else -1
+        if prefixSum  > 0: 
+            res             = max( res, length+1 )
+        if prefixSum not in hmap:
+            hmap[prefixSum] = length
+        if prefixSum-1 in hmap:
+            res             = max( res, length-hmap[prefixSum-1] )
+    return res 
 
