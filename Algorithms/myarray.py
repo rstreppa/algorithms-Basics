@@ -2416,3 +2416,54 @@ def distanceBetweenBusStops(self, distance, start, destination):
         cur         += distance[start]
         start       = (start+1) % len(distance)
     return min(cur, total-cur)
+
+def sumOddLengthSubarrays(self, arr):
+    """
+    1588. Sum of All Odd Length Subarrays
+    Easy
+    Given an array of positive integers arr, return the sum of all possible odd-length subarrays of arr.
+    A subarray is a contiguous subsequence of the array.
+    
+    Neat problem as you can optimize it in O(n)
+    watch this video
+    https://www.youtube.com/watch?v=J5IIH35EBVE
+    
+    arr [ 1 4 2 5 3 ]
+    
+    num    1  4  2  5  3  = numbers
+    times  3  4  5  4  3  = number of times each number appears in an odd subarray
+    total  3  16 10 20 9  = 58 right answer
+    
+    A--B---C              = suppose you go A->B in two ways and B->C in three ways, total is 6 ways A->B->C
+    
+    number of subarrays that contain index i = ( start at i ) * ( end at i ) 
+    How many subarrays start at index 0     = 5
+    How many subarrays end at index 0       = 1
+    How many subarrays start at index 1     = 4
+    How many subarrays end at index 1       = 2
+    How many subarrays start at index i     = n-i
+    How many subarrays end at index i       = i+1
+    
+    num    1  4  2  5  3  = numbers
+    start  5  4  3  2  1
+    end    1  2  3  4  5
+    total  5  8  9  8  5
+    odd    3  4  5  4  3  = number of times each number appears in an odd subarray
+    
+    If total is odd, you need to add 1 to total // 2 to get odd subarrays
+     
+    :type arr: List[int]
+    :rtype: int
+    """
+    
+    n                   = len(arr)
+    res                 = 0
+    for i in range(n):
+        start           = n-i           # how many subarrays start with index i
+        end             = i+1           # how many subarrays end with index i
+        total           = start * end   # how many subarrays contain index i
+        odd             = total // 2  if total % 2 == 0 else total // 2 + 1
+    
+        res             += odd * arr[i] # how many odd subarrays contain value times value itself
+        
+    return res
