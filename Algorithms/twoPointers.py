@@ -489,5 +489,39 @@ def backspaceCompare3(S, T):
         i, j = i - 1, j - 1
 
 
+def maxProfit(self, prices):
+    """
+    121. Best Time to Buy and Sell Stock
+    Easy
+    You are given an array prices where prices[i] is the price of a given stock on the ith day.
+    You want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell that stock.
+    Return the maximum profit you can achieve from this transaction. If you cannot achieve any profit, return 0.
 
+    you cannot take max(prices) - min(prices) as time goes forward and they could be reversed
+    
+    Two Pointer technique: l = buy r = sell
+    
+    when prices(l) > prices(r) you are going to update the pointers and have l point to the smaller value
+    when prices(l) < prices(r) we just update the right pointer
+    
+    O(n) time O(1) spoace because we just used two pointers and no extra space
+    
+    :type prices: List[int]
+    :rtype: int
+    """
+    
+    l               = 0     # l = buy
+    r               = 1     # r = sell
+    res             = 0     # max profit
+    
+    while r < len(prices):
+        # profitable transaction?
+        if prices[l] < prices[r]:
+            profit  = prices[r] - prices[l]
+            res     = max( res, profit )    # potentially update the max
+        else:
+            l       = r     # switch left to right since right is lower
+        r           += 1    # always increment right pointer regardless
+            
+    return res
 
