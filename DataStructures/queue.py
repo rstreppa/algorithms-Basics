@@ -96,8 +96,42 @@ def reverse_queue_rec(queue):
 # This is the CircularQueue class
 class CircularQueue:
     """
-    A Circular Queue is a queue data structure but circular in shape, therefore after the last position, the next place in the queue is the first position.
-    https://www.studytonight.com/code/python/ds/circular-queue-in-python.php
+        A Circular Queue is a queue data structure but circular in shape, therefore after the last position, the next place in the queue is the first position.
+        https://www.studytonight.com/code/python/ds/circular-queue-in-python.php
+        In case of Linear queue, we did not had the head and tail pointers because we used python List for implementing it. But in case of a circular queue, as the size of the queue is fixed, hence we will set a maxSize for our list used for queue implementation.
+
+        A few points to note here are:
+
+        In case of a circular queue, head pointer will always point to the front of the queue, and tail pointer will always point to the end of the queue.
+        Initially, the head and the tail pointers will be pointing to the same location, this would mean that the queue is empty.
+        Circular queue python
+
+        New data is always added to the location pointed by the tail pointer, and once the data is added, tail pointer is incremented to point to the next available location.
+        Circular queue python
+
+        In a circular queue, data is not actually removed from the queue. Only the head pointer is incremented by one position when dequeue is executed. As the queue data is only the data between head and tail, hence the data left outside is not a part of the queue anymore, hence removed.
+        Circular queue python
+
+        The head and the tail pointer will get reinitialised to 0 every time they reach the end of the queue.
+        Circular queue python
+
+        Also, the head and the tail pointers can cross each other. In other words, head pointer can be greater than the tail. Sounds odd? This will happen when we dequeue the queue a couple of times and the tail pointer gets reinitialised upon reaching the end of the queue.
+        Circular queue python
+
+        Another very important point is keeping the value of the tail and the head pointer within the maximum queue size. In the diagrams above the queue has a size of 8, hence, the value of tail and head pointers will always be between 0 and 7. This can be controlled either by checking everytime whether tail or head have reached the maxSize and then setting the value 0 or, we have a better way, which is, for a value x if we divide it by 8, the remained will never be greater than 8, it will always be between 0 and 7, which is exactly what we want.
+        If you want to see a Queue operating in realtime, checkout this animation.
+
+        Algorithm for Circular Queue
+        Initialize the queue, with size of the queue defined (maxSize), and head and tail pointers.
+        enqueue: Check if the number of elements is equal to maxSize - 1:
+        If Yes, then return Queue is full
+        If No, then add the new data element to the location of tail pointer and increment the tail pointer.
+        dequeue: Check if the number of elements in the queue is zero:
+        If Yes, then return Queue is empty
+        If No, then increment the head pointer.
+        size:
+        If, tail >= head, size = tail - head
+        But if, head > tail, then size = maxSize - (head - tail)
     """
   
   # constructor for the class
