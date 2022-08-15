@@ -506,3 +506,41 @@ def arrayRankTransform(self, arr):
     """
     ranks = {num: r for r, num in enumerate(sorted(set(arr)), start=1)}
     return [ranks[num] for num in arr]
+
+def maxEqualRowsAfterFlips(self, matrix):
+    """
+    1072. Flip Columns For Maximum Number of Equal Rows
+    Medium
+    You are given an m x n binary matrix matrix.
+    You can choose any number of columns in the matrix and flip every cell in that column (i.e., Change the value of the cell from 0 to 1 or vice versa).
+    Return the maximum number of rows that have all values equal after some number of flips.
+
+    We are storing the pattern of the row and the flipped version of that row values which ever has the max value will be considered as the answer
+
+    [0,0,0],
+    [0,0,1],
+    [1,1,0]
+                        count
+    pattern -> (0,0,0) -> 1
+               (1,1,1) -> 1  // flipped
+               (0,0,1) -> 1  
+               (1,1,0) -> 1  // Flipped
+               (1,1,0) -> 2   // as 1,1,0 is already present
+               (0,0,1) -> 2   // Flipped and since (0,0,1) is already present count is 2
+
+               Max count 2 is the answer
+			   
+    TC -> O(m*n)		
+   
+    :type matrix: List[List[int]]
+    :rtype: int
+    """
+    pattern=defaultdict(int)
+    
+    for row in matrix:
+        
+        pattern[tuple(row)]+=1
+        flip=[1-c for c in row]
+        pattern[tuple(flip)]+=1
+    
+    return max(pattern.values())        
