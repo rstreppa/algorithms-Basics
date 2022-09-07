@@ -736,3 +736,43 @@ def buildTree(self, preorder, inorder):
         return root
         
     return helper( 0, 0, len(inorder)-1, preorder, inorder )
+
+
+def constructFromPrePost(self, preorder, postorder):
+    """
+    889. Construct Binary Tree from Preorder and Postorder Traversal
+    Medium
+    Given two integer arrays, preorder and postorder where preorder is the preorder traversal 
+    of a binary tree of distinct values and postorder is the postorder traversal of the same tree,
+    reconstruct and return the binary tree.
+    If there exist multiple answers, you can return any of them.
+        
+    Input: preorder = [1,2,4,5,3,6,7], postorder = [4,5,2,6,7,3,1]
+    Output: [1,2,3,4,5,6,7]  
+        
+    O(n) time compelxity because we visit each node once
+        
+    :type preorder: List[int]
+    :type postorder: List[int]
+    :rtype: TreeNode
+    """
+    # we know that index 0 in preorder is the root
+    # also in postorder if index is bigger it is not a child of a smaller index
+    # postorder will guide us
+        
+    # build root 1, then take next in preorder 2 and se its index in postorder
+    # it is a child, then look at 4 it has a lessert index then it is a child of 2
+    # then continue to node 5 which has a greater index in post than 4 so it is not its child
+    # this way you continue and build the whole tree
+        
+    if( postorder ):
+        if len(postorder) == 1:
+            return TreeNode(preorder.pop(0))
+        root=TreeNode(preorder.pop(0))
+            
+        mid=postorder.index(preorder[0])
+        
+        root.left=self.constructFromPrePost(preorder,postorder[:mid+1])
+        root.right=self.constructFromPrePost(preorder,postorder[mid+1:-1])
+        return root        
+
