@@ -626,3 +626,87 @@ def invertTreeIterative(root):
             stack += node.left, node.right
             node.left, node.right = node.right, node.left          
     return root    
+
+def BinaryTree2DoubleLinkedList( root ):
+    """ 
+    	Convert a given Binary Tree to Doubly Linked List
+	Do it in place
+	
+	Given a Binary Tree (BT), convert it to a Doubly Linked List(DLL) In-Place. The left and right pointers in nodes are to be used 
+	as previous and next pointers respectively in converted DLL. 
+	The order of nodes in DLL must be the same as in Inorder for the given Binary Tree. 
+	The first node of Inorder traversal (leftmost node in BT) must be the head node of the DLL. 
+
+	https://www.geeksforgeeks.org/convert-given-binary-tree-doubly-linked-list-set-3/
+	
+	The idea is to do in order traversal of the binary tree. 
+	While doing inorder traversal, keep track of the previously visited node in a variable, say prev. 
+	For every visited node, make it next to the prev and previous of this node as prev.
+    """
+    # Base case
+    if root is None:
+        return root
+             
+    # Recursively convert left subtree
+    head = BinaryTree2DoubleLinkedList( root.left )
+     
+    # Since we are going to change prev,
+    # we need to use global keyword
+    global prev
+     
+    # If prev is empty, then this is the
+    # first node of DLL
+    if prev is None :
+        head = root
+         
+    else:
+        root.left = prev
+        prev.right = root
+     
+    # Update prev
+    prev = root
+     
+    # Recursively convert right subtree
+    BinaryTree2DoubleLinkedList(root.right)
+     
+    return head   
+
+
+    def flatten(self, root):
+        """
+        114. Flatten Binary Tree to Linked List
+        Medium
+        Given the root of a binary tree, flatten the tree into a "linked list":
+        The "linked list" should use the same TreeNode class where the right child pointer points to the next node in the list and the left child pointer
+        is always null.
+        The "linked list" should be in the same order as a pre-order traversal of the binary tree.
+        
+        :type root: TreeNode
+        :rtype: None Do not return anything, modify root in-place instead.
+        """
+        
+        # flatten the root tree and return the list tail
+        # because the tail will be linked to the right pointer of the right subtree
+        def dfs( root ):
+            if not root:
+                return None
+            
+            # flatten 
+            leftTail  = dfs( root.left )
+            rightTail = dfs( root.right )
+            
+            # if left empty but right not empty you don't need to do anything
+            # if right empty but left not empty you need to stick the left to the right
+            # the order of the next three lines is not random
+            if root.left:
+                leftTail.right = root.right
+                # we also want the root right pointer to be at the beginning of the linked list
+                root.right = root.left
+                root.left = None  # left pointer set to Null as we convert to linked list
+            
+            last =  rightTail or  leftTail or root # if rightTail then it else leftTail else if both Null then root
+            
+            return last
+        
+        dfs( root )
+	
