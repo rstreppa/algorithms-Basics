@@ -710,3 +710,29 @@ def BinaryTree2DoubleLinkedList( root ):
         
         dfs( root )
 	
+def buildTree(self, preorder, inorder):
+    """
+    105. Construct Binary Tree from Preorder and Inorder Traversal
+    Medium
+    Given two integer arrays preorder and inorder where preorder is the preorder traversal of a binary tree
+    and inorder is the inorder traversal of the same tree, construct and return the binary tree.
+        
+    :type preorder: List[int]
+    :type inorder: List[int]
+    :rtype: TreeNode
+    """
+    # define boundaries and check them
+    def helper( preStart, inStart, inEnd, preorder, inorder ):
+        if preStart > len(preorder)-1 or inStart > inEnd:
+            return
+        # by definition of pre order
+        root        = TreeNode( preorder[preStart] )
+        # now in the inorder what is on the left or root wil be on the lhs
+        inIndex     = inorder.index( root.val )
+        root.left   = helper( preStart+1, inStart, inIndex-1, preorder, inorder )
+        # you now want to skip in preorder stuff on the left side so change preorder index
+        root.right  = helper( preStart+inIndex-inStart+1, inIndex+1, inEnd, preorder, inorder )          
+            
+        return root
+        
+    return helper( 0, 0, len(inorder)-1, preorder, inorder )
