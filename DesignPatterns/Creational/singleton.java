@@ -1,6 +1,10 @@
 /**
 This shows that we successfully created a single TradingManager instance and used it to trade a bond. This is just a simple demonstration; in a real e-trading system, the trade method would involve much more complex logic.
 This Singleton pattern ensures that there's only ever one TradingManager in our application, which is beneficial because we have a single point of control and coordination for all trades.
+
+This program will output:
+Trading 10 units of bond: Corporate Bond
+
 */
 
 
