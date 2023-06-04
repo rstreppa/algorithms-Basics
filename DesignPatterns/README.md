@@ -25,6 +25,7 @@ _More creational patterns to come..._
 ## Structural Patterns
 
 Structural patterns concern class and object composition. They use inheritance to compose interfaces and define ways to compose objects to obtain new functionalities.
+These patterns are concerned with how classes and objects can be composed, to form larger structures.
 
 _More structural patterns to come..._
 
