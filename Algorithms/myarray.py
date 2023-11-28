@@ -33,34 +33,6 @@ def findDisappearedNumbers(nums):
     return list( set(range(1, len(nums)+1)).difference(set(nums)) )
 
 
-def singleNumber(nums):
-    ''' Given a non-empty array of integers nums, every element appears twice except for one. 
-        Find that single one.
-        You must implement a solution with a linear runtime complexity and use only constant extra space.
-    '''
-    d = dict()
-    for i in nums:
-        d[i] = d.get(i, 0) + 1
-    for k, v in d.items():
-        if v == 1:
-            return k
-        
-    return -1
-    
- 
-def singleNumber2(nums):
-    ''' https://hackernoon.com/xor-the-magical-bit-wise-operator-24d3012ed821
-        Solution using XOR
-        
-        Bitwise XOR ( ^ ) like the other operators (except ~) 
-        also take two equal-length bit patterns. 
-        If both bits in the compared position of the bit patterns are 0 or 1, 
-        the bit in the resulting bit pattern is 0, otherwise 1.
-    '''
-    res = 0
-    for num in nums:
-        res ^= num
-    return res
 
 def canAttendMeetings( intervals ):
     ''' Given an array of meeting time intervals consisting of start and end times [s1, e1], [s2, e2], ... , 
@@ -270,35 +242,6 @@ def productExceptSelf2(nums):
         res[i]      = left[i] * right[i]
         
     return res
-
-
-def removeDuplicates(nums):
-    """
-    26. Remove Duplicates from Sorted Array
-    Easy
-    Given an integer array nums sorted in non-decreasing order, remove the duplicates in-place such that each unique element appears only once. 
-    The relative order of the elements should be kept the same.
-    Since it is impossible to change the length of the array in some languages, you must instead have the result be placed in the first part of the array nums. 
-    More formally, if there are k elements after removing the duplicates, then the first k elements of nums should hold the final result. 
-    It does not matter what you leave beyond the first k elements.
-    Return k after placing the final result in the first k slots of nums.
-    Do not allocate extra space for another array. You must do this by modifying the input array in-place with O(1) extra memory.   
-    
-    :type nums: List[int]
-    :rtype: int
-    """
-    n   = len(nums)
-    if n == 0:
-        return nums
-    i   = 1
-    while i < n:
-        if nums[i] == nums[i-1]:
-            nums.pop(i)
-            n   -= 1
-        else:
-            i   += 1
-    return n
-
 
 
 
