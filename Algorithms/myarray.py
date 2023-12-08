@@ -10,27 +10,11 @@ from functools import reduce
 import bisect
 
 
-def containsDuplicate(nums):
-    ''' Given an integer array nums, return true if any value appears at least twice in the array, 
-        and return false if every element is distinct.     
-    '''
-    numsSet = set(nums)
-    if len(numsSet) < len(nums):
-        return True
-    else:
-        return False
-    
 def missingNumber(nums):
     ''' Given an array nums containing n distinct numbers in the range [0, n], 
         return the only number in the range that is missing from the array. 
     '''
     return sum(range(len(nums)+1)) - sum(nums)
-        
-def findDisappearedNumbers(nums):
-    ''' Given an array nums of n integers where nums[i] is in the range [1, n], 
-        return an array of all the integers in the range [1, n] that do not appear in nums.
-    '''
-    return list( set(range(1, len(nums)+1)).difference(set(nums)) )
 
 
 
